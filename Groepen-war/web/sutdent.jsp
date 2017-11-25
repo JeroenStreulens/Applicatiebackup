@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+            <input type="hidden" name="komvan" value="student"/>
     </body>
 </html>
