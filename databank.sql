@@ -16,7 +16,7 @@ drop table AP_Users;
 
 create table AP_Users(
         unr             integer not null,
-        suaam           varchar(30) not null,
+        unaam           varchar(30) not null,
         upwoord         varchar(30) not null,
         bevestigd       char,
 	primary key(unr)
