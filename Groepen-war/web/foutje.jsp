@@ -12,6 +12,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form method="post" action="<c:url value='ctrl.do' />">
+            Naam of paswoord niet gevonden, probeer het nog eens.
+            <input type="submit" value="Aanmelden"/>
+            <input type="hidden" name="komvan" value="fout"/>
+        </form>
     </body>
 </html>
