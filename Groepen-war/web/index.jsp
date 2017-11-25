@@ -12,7 +12,7 @@
         <title>Home Page</title>
     </head>
     <body>
-        <h1>Welkom</h1>
+        <h1>Welkomadfadfasdfaf</h1>
         <form method="post" action="<c:url value='ctrl.do' />">
             Klik op onderstaande knop om u aan te melden.
             <input type="submit" value="Aanmelden"/>
