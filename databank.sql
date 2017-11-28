@@ -24,8 +24,8 @@ create table AP_Users(
 
 create table AP_Rollen(
         rol             varchar(20),
-        rnr             int references AP_Users(unr),
-        primary key(rnr)
+        unr             int references AP_Users(unr),
+        primary key(unr)
 );
 
 create table AP_Voorkeur(
@@ -48,3 +48,8 @@ insert into AP_Users VALUES(1,'Jeroen Streulens', 'azerty', 'n');
 insert into AP_Users VALUES(2, 'Mathias Wens', 'ikkomuitdekast', 'n');
 insert into AP_Users VALUES (3,'Den Herman','unix', null);
 insert into AP_Users VALUES (4,'Dessie','sponzenridder', null);
+insert into AP_Rollen VALUES('student', 0);
+insert into AP_Rollen VALUES('student', 1);
+insert into AP_Rollen VALUES('student', 2);
+insert into AP_Rollen VALUES('docent', 3);
+insert into AP_Rollen VALUES('docent', 4);

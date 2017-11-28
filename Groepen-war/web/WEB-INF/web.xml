@@ -13,4 +13,33 @@
             30
         </session-timeout>
     </session-config>
+    <security-constraint>
+        <display-name>Docentgroep</display-name>
+        <web-resource-collection>
+            <web-resource-name>GeneralConstraint</web-resource-name>
+            <description/>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>student</role-name>
+            <role-name>docent</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>TestRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/aanloggen.jsp</form-login-page>
+            <form-error-page>/foutje.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>student</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>docent</role-name>
+    </security-role>
 </web-app>
