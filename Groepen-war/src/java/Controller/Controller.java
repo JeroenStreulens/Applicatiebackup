@@ -7,11 +7,15 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import sessionBeans.GroepenLocal;
 
 /**
  *
@@ -19,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Controller extends HttpServlet {
 
+    @EJB
+    private GroepenLocal groepen;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,6 +37,18 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession sessie = request.getSession();
+        if(request.isUserInRole("student")){
+            sessie.setAttribute("unr", request.getUserPrincipal().getName());
+            Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
+            sessie.setAttribute("voorkeuren", voorkeuren);
+            Collection studenten = groepen.getUsers();
+            sessie.setAttribute("studenten", studenten);
+            goToPage("student.jsp", request, response);
+        }
+        else if(request.isUserInRole("docent")){
+            goToPage("docent.jsp", request, response);
+        }
         switch (request.getParameter("komvan")){
             case "index":
                 {
@@ -38,13 +56,31 @@ public class Controller extends HttpServlet {
                     break;
                 }
             case "student":
-                {
+                {                    
                     goToPage("studoverzicht.jsp", request, response);
                 }
             case "studoverzicht":
                 {
                     goToPage("bevestiging.jsp", request, response);
                 }
+        }
+        if(request.getParameter("verwijder") != null){
+            groepen.removeVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("verwijder"));
+            Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
+            sessie.setAttribute("voorkeuren", voorkeuren);
+            goToPage("student.jsp", request, response);
+        }
+        if(request.getParameter("wel") != null){
+            groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("wel"), 'J');
+            Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
+            sessie.setAttribute("voorkeuren", voorkeuren);
+            goToPage("student.jsp", request, response);
+        }
+        if(request.getParameter("niet") != null){
+            groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("niet"), 'N');
+            Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
+            sessie.setAttribute("voorkeuren", voorkeuren);
+            goToPage("student.jsp", request, response);
         }
     }
     

@@ -5,6 +5,7 @@
  */
 package sessionBeans;
 
+import java.util.*;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +14,10 @@ import javax.ejb.Local;
  */
 @Local
 public interface GroepenLocal {
+    
+    public Collection getUsers();
+    public void maakVoorkeur(String snr, String osnr, char voorkeur);
+    public Collection getVoorkeur(String snr);
+    public void removeVoorkeur(String vsnr, String osnr);
     
 }

@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ApVoorkeur.findAll", query = "SELECT a FROM ApVoorkeur a")
     , @NamedQuery(name = "ApVoorkeur.findByVsnr", query = "SELECT a FROM ApVoorkeur a WHERE a.apVoorkeurPK.vsnr = :vsnr")
     , @NamedQuery(name = "ApVoorkeur.findByOsnr", query = "SELECT a FROM ApVoorkeur a WHERE a.apVoorkeurPK.osnr = :osnr")
-    , @NamedQuery(name = "ApVoorkeur.findByVoorkeur", query = "SELECT a FROM ApVoorkeur a WHERE a.voorkeur = :voorkeur")})
+    , @NamedQuery(name = "ApVoorkeur.findByVoorkeur", query = "SELECT a FROM ApVoorkeur a WHERE a.voorkeur = :voorkeur")
+    , @NamedQuery(name = "ApVoorkeur.findByVsnrOsnr", query = "SELECT a FROM ApVoorkeur a WHERE a.apVoorkeurPK.vsnr = :vsnr AND a.apVoorkeurPK.osnr = :osnr")})
 public class ApVoorkeur implements Serializable {
 
     private static final long serialVersionUID = 1L;
