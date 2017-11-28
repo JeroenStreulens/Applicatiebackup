@@ -1,7 +1,7 @@
 <%-- 
-    Document   : docent
-    Created on : 25-nov-2017, 11:08:02
-    Author     : jeroe
+    Document   : nieuwegroep
+    Created on : 28-nov-2017, 11:26:06
+    Author     : Jeroe
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Welkom </h1>
+        <h1>Hello World!</h1>
     </body>
 </html>

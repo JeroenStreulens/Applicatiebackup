@@ -39,11 +39,19 @@ public class Controller extends HttpServlet {
                 }
             case "student":
                 {
-                    goToPage("studoverzicht.jsp", request, response);
+                    goToPage("bevestiging.jsp", request, response);
                 }
             case "studoverzicht":
                 {
-                    goToPage("bevestiging.jsp", request, response);
+                    goToPage("studoverzicht.jsp", request, response);
+                }
+            case "docenttonieuw":
+                {
+                    goToPage("nieuwegroep.jsp", request, response);
+                }
+            case "docenttobewerk":
+                {
+                    goToPage("bewerkgroep.jsp", request, response);
                 }
         }
     }
