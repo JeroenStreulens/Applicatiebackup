@@ -53,4 +53,10 @@ public class Groepen implements GroepenLocal {
         q.setParameter("osnr", Integer.parseInt(osnr));
         em.remove(q.getSingleResult());
     }
+    
+    public void getGroepNr(){
+        Query q = em.createNamedQuery("ApVoorkeur.findByVsnrOsnr");
+        q.setParameter("vsnr", Integer.parseInt(vsnr));
+        q.setParameter("osnr", Integer.parseInt(osnr));
+    }
 }

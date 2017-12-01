@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ApGroepen.findAll", query = "SELECT a FROM ApGroepen a")
+    , @NamedQuery(name = "ApGroepen.findGnr", query = "SELECT distinct(a.apGroepenPK.gnr) FROM ApGroepen a ")
     , @NamedQuery(name = "ApGroepen.findByGnr", query = "SELECT a FROM ApGroepen a WHERE a.apGroepenPK.gnr = :gnr")
     , @NamedQuery(name = "ApGroepen.findByGsnr", query = "SELECT a FROM ApGroepen a WHERE a.apGroepenPK.gsnr = :gsnr")})
 public class ApGroepen implements Serializable {
