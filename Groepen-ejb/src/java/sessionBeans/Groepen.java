@@ -35,8 +35,6 @@ public class Groepen implements GroepenLocal {
     }
     
     public void maakVoorkeur(String snr, String osnr, char voorkeur){
-        Query q = em.createNamedQuery("ApUsers.findByUnr");
-        q.setParameter("unr", Integer.parseInt(snr));
         ApVoorkeur maak = new ApVoorkeur(Integer.parseInt(snr), Integer.parseInt(osnr));
         maak.setVoorkeur(voorkeur);
         em.persist(maak);
@@ -45,6 +43,9 @@ public class Groepen implements GroepenLocal {
     public Collection getVoorkeur(String snr){
         Query q = em.createNamedQuery("ApVoorkeur.findByVsnr");
         q.setParameter("vsnr", Integer.parseInt(snr));
+        for(int i = 0; i < q.getResultList().size(); i++){
+            System.out.println(q.getResultList().get(i).toString());
+        }
         return q.getResultList();
     }
     
@@ -52,6 +53,7 @@ public class Groepen implements GroepenLocal {
         Query q = em.createNamedQuery("ApVoorkeur.findByVsnrOsnr");
         q.setParameter("vsnr", Integer.parseInt(vsnr));
         q.setParameter("osnr", Integer.parseInt(osnr));
+        System.out.println(q.getSingleResult().toString());
         em.remove(q.getSingleResult());
     }
     
