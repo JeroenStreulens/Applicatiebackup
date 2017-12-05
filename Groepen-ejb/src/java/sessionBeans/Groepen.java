@@ -64,10 +64,11 @@ public class Groepen implements GroepenLocal {
     
     public Collection studentenZonderGroep(Collection studenten){
         Collection col=em.createNamedQuery("ApGroepen.findallstudents").getResultList();
-        Iterator<>it=col.iterator();
+        Iterator<ApGroepen>it=col.iterator();
         while (it.hasNext()){
-            col.removeAll(col(it.next()));
+            studenten.remove(it.next());
         }
+        return studenten;
     }
     
     //public void getGroepNr(){
