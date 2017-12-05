@@ -38,12 +38,13 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessie = request.getSession();
+        Collection studenten = groepen.getUsers();
+        sessie.setAttribute("studenten", studenten);
         if(request.isUserInRole("student")){
             sessie.setAttribute("unr", request.getUserPrincipal().getName());
             Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
             sessie.setAttribute("voorkeuren", voorkeuren);
-            Collection studenten = groepen.getUsers();
-            sessie.setAttribute("studenten", studenten);
+        
             goToPage("student.jsp", request, response);
         }
         else if(request.isUserInRole("docent")){
@@ -71,6 +72,8 @@ public class Controller extends HttpServlet {
                 {
                     goToPage("bewerkgroep.jsp", request, response);
                 }
+            default:
+                break;
         }
         if(request.getParameter("verwijder") != null){
             groepen.removeVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("verwijder"));
@@ -78,14 +81,16 @@ public class Controller extends HttpServlet {
             sessie.setAttribute("voorkeuren", voorkeuren);
             goToPage("student.jsp", request, response);
         }
-        if(request.getParameter("wel") != null){
-            groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("wel"), 'J');
+        System.out.println(request.getParameter("knop"));
+        if("wel".equals(request.getParameter("knop"))){
+            groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("sel"), 'J');
             Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
             sessie.setAttribute("voorkeuren", voorkeuren);
+            //Collection namen = groepen.getNamen()
             goToPage("student.jsp", request, response);
         }
-        if(request.getParameter("niet") != null){
-            groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("niet"), 'N');
+        if("niet".equals(request.getParameter("knop"))){
+            groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("sel"), 'N');
             Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
             sessie.setAttribute("voorkeuren", voorkeuren);
             goToPage("student.jsp", request, response);
