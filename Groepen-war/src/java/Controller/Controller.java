@@ -39,6 +39,7 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessie = request.getSession();
         Collection studenten = groepen.getUsers();
+        Collection studentenzgroep = groepen.studentenZonderGroep(studenten);
         sessie.setAttribute("studenten", studenten);
         if(request.getParameter("komvan") == null){
             if(request.isUserInRole("student")){
@@ -94,6 +95,7 @@ public class Controller extends HttpServlet {
                     }
                 default:
                     break;
+
             }
         }
         if(request.getParameter("verwijder") != null){

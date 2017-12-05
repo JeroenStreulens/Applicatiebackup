@@ -56,4 +56,26 @@ public class Groepen implements GroepenLocal {
         System.out.println(q.getSingleResult().toString());
         em.remove(q.getSingleResult());
     }
+    
+    public int getGroepNr(){
+    int groepnr;
+    groepnr=(int)em.createNamedQuery("ApGroepen.findMaxgrp").getSingleResult();
+    groepnr+=1;
+    return groepnr;
+    }
+    
+    public Collection studentenZonderGroep(Collection studenten){
+        Collection col=em.createNamedQuery("ApGroepen.findallstudents").getResultList();
+        Iterator<ApGroepen>it=col.iterator();
+        while (it.hasNext()){
+            studenten.remove(it.next());
+        }
+        return studenten;
+    }
+    
+    //public void getGroepNr(){
+     //   Query q = em.createNamedQuery("ApVoorkeur.findByVsnrOsnr");
+        //q.setParameter("vsnr", Integer.parseInt(vsnr));
+        //q.setParameter("osnr", Integer.parseInt(osnr));
+    //}
 }
