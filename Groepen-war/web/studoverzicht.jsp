@@ -18,7 +18,7 @@
                 <tr><th>Naam student</th><th>Voorkeur</th></tr>
                 <c:forEach var="voor" items="${sessionScope.voorkeuren}">
                     <tr>
-                        <td><c:out value="${voor.getApVoorkeurPK().getOsnr.getNaam()}" /></td>
+                        <td><c:out value="${voor.getApVoorkeurPK().getOsnr.getUnaam()}" /></td>
                         <td><c:out value="${voor.getVoorkeur()}" /></td>
                     </tr>
                 </c:forEach>

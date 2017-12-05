@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ApRollen.findAll", query = "SELECT a FROM ApRollen a")
     , @NamedQuery(name = "ApRollen.findByRol", query = "SELECT a FROM ApRollen a WHERE a.rol = :rol")
-    , @NamedQuery(name = "ApRollen.findByRnr", query = "SELECT a FROM ApRollen a WHERE a.rnr = :rnr")})
+    , @NamedQuery(name = "ApRollen.findByUnr", query = "SELECT a FROM ApRollen a WHERE a.unr = :unr")})
 public class ApRollen implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,14 +37,14 @@ public class ApRollen implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "rnr")
-    private Integer rnr;
+    @Column(name = "unr")
+    private Integer unr;
 
     public ApRollen() {
     }
 
-    public ApRollen(Integer rnr) {
-        this.rnr = rnr;
+    public ApRollen(Integer unr) {
+        this.unr = unr;
     }
 
     public String getRol() {
@@ -55,18 +55,18 @@ public class ApRollen implements Serializable {
         this.rol = rol;
     }
 
-    public Integer getRnr() {
-        return rnr;
+    public Integer getUnr() {
+        return unr;
     }
 
-    public void setRnr(Integer rnr) {
-        this.rnr = rnr;
+    public void setUnr(Integer unr) {
+        this.unr = unr;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (rnr != null ? rnr.hashCode() : 0);
+        hash += (unr != null ? unr.hashCode() : 0);
         return hash;
     }
 
@@ -77,7 +77,7 @@ public class ApRollen implements Serializable {
             return false;
         }
         ApRollen other = (ApRollen) object;
-        if ((this.rnr == null && other.rnr != null) || (this.rnr != null && !this.rnr.equals(other.rnr))) {
+        if ((this.unr == null && other.unr != null) || (this.unr != null && !this.unr.equals(other.unr))) {
             return false;
         }
         return true;
@@ -85,7 +85,7 @@ public class ApRollen implements Serializable {
 
     @Override
     public String toString() {
-        return "entityBeans.ApRollen[ rnr=" + rnr + " ]";
+        return "entityBeans.ApRollen[ unr=" + unr + " ]";
     }
     
 }
