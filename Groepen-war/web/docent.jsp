@@ -15,9 +15,14 @@
     <body>
         <h1>Welkom </h1>
         <h2>Hieronder vindt u een overzicht van de reeds gemaakte groepen:</h2>
-        <c:forEach var="groep" items="${sessionScope.studenten}">
+       <%--  <c:forEach var="groep" items="${sessionScope.studenten}">
                     <option value="${stud.getUnr()}"><c:out value="${stud.getNaam()}" /></option>
                     <button type="submit" name="wel" value="${stud.getUnr}" >Wel</button>
         </c:forEach>
+       --%>
+       <form action=<c:out value="ctrl.do" /> method="post">
+            <input type="hidden" name="komvan" value="docenttonieuw"/>
+            <input type="submit" value="Nieuwe groep" />
+        </form>
     </body>
 </html>

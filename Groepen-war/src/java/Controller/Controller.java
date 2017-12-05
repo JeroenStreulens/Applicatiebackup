@@ -39,6 +39,7 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessie = request.getSession();
         Collection studenten = groepen.getUsers();
+        Collection studentenzgroep = groepen.studentenZonderGroep(studenten);
         sessie.setAttribute("studenten", studenten);
         if(request.isUserInRole("student")){
             sessie.setAttribute("unr", request.getUserPrincipal().getName());
@@ -59,18 +60,33 @@ public class Controller extends HttpServlet {
             case "student":
                 {                    
                     goToPage("bevestiging.jsp", request, response);
+                    break;
                 }
             case "studoverzicht":
                 {
                     goToPage("studoverzicht.jsp", request, response);
+                    break;
                 }
             case "docenttonieuw":
                 {
-                    goToPage("nieuwegroep.jsp", request, response);
+                    sessie.setAttribute("nieuwgroepnr", groepen.getGroepNr());
+                    goToPage("bewerkgroep.jsp", request, response);
+                    break;
                 }
             case "docenttobewerk":
                 {
                     goToPage("bewerkgroep.jsp", request, response);
+                    break;
+                }
+            case "bewerktobewerk":
+                {
+                    goToPage("bewerkgroep.jsp", request, response);
+                    break;
+                }
+            case "bewerktodocent":
+                {
+                    goToPage("docent.jsp", request, response);
+                    break;
                 }
             default:
                 break;

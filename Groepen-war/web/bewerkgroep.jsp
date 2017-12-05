@@ -9,9 +9,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Bewerken</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Bewerk groep met groepnr <c:out value="${sessionScope.nieuwgroepnr}"></h1>
+        <form action=<c:out value="ctrl.do" /> method="post">
+            <c:forEach var="stud" items="${sessionScope.studenten}">
+                <option value="${stud.getUnr()}"><c:out value="${stud.getUnaam()}" /></option>
+            </c:forEach>
+            <button type="submit" value="Toevoegen">Toevoegen</button>
+            <input type="hidden" name="komvan" value="bewerktobewerk" />
+        </form>
+        <form action=<c:out value="ctrl.do" /> method="post">
+            <button type="submit" value="Toevoegen">Ga naar overzicht</button>
+            <input type="hidden" name="komvan" value="bewerktodocent" />
+        </form>
+        
     </body>
 </html>
