@@ -9,7 +9,7 @@
  */
 
 
-drop table AP_Groepen;
+ drop table AP_Groepen;
 drop table AP_Voorkeur;
 drop table AP_Rollen;
 drop table AP_Users;
