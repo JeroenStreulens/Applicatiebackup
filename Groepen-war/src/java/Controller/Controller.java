@@ -40,59 +40,84 @@ public class Controller extends HttpServlet {
         HttpSession sessie = request.getSession();
         Collection studenten = groepen.getUsers();
         sessie.setAttribute("studenten", studenten);
-        if(request.isUserInRole("student")){
-            sessie.setAttribute("unr", request.getUserPrincipal().getName());
-            Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
-            sessie.setAttribute("voorkeuren", voorkeuren);
-        
-            goToPage("student.jsp", request, response);
+        if(request.getParameter("komvan") == null){
+            if(request.isUserInRole("student")){
+                sessie.setAttribute("unr", request.getUserPrincipal().getName());
+                Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
+                sessie.setAttribute("voorkeuren", voorkeuren);
+                goToPage("student.jsp", request, response);
+            }
+            else if(request.isUserInRole("docent")){
+                sessie.setAttribute("unr", request.getUserPrincipal().getName());
+                goToPage("student.jsp", request, response);
+            }
         }
-        else if(request.isUserInRole("docent")){
-            goToPage("docent.jsp", request, response);
-        }
-        switch (request.getParameter("komvan")){
-            case "index":
-                {
-                    goToPage("aanloggen.jsp", request, response);
+        else{
+            switch (request.getParameter("komvan")){
+                case "index":
+                    {
+                        if(request.getAttribute("rol").equals("student")){
+                            sessie.setAttribute("unr", request.getUserPrincipal().getName());
+                            Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
+                            sessie.setAttribute("voorkeuren", voorkeuren);
+                            System.out.println("Aangemeld als student");
+                            goToPage("student.jsp", request, response);
+                            break;
+                        }
+                        else if(request.getAttribute("rol").equals("docent")){
+                            System.out.println("Aangemeld als docent");
+                            goToPage("docent.jsp", request, response);
+                            break;
+                        }
+                    }
+                case "student":
+                    {                    
+                        goToPage("bevestiging.jsp", request, response);
+                        System.out.println("De student wil bevestigen");
+                        break;
+                    }
+                case "studoverzicht":
+                    {
+                        goToPage("studoverzicht.jsp", request, response);
+                        System.out.println("De student heeft bevestigd");
+                        break;
+                    }
+                case "docenttonieuw":
+                    {
+                        goToPage("nieuwegroep.jsp", request, response);
+                        break;
+                    }
+                case "docenttobewerk":
+                    {
+                        goToPage("bewerkgroep.jsp", request, response);
+                        break;
+                    }
+                default:
                     break;
-                }
-            case "student":
-                {                    
-                    goToPage("bevestiging.jsp", request, response);
-                }
-            case "studoverzicht":
-                {
-                    goToPage("studoverzicht.jsp", request, response);
-                }
-            case "docenttonieuw":
-                {
-                    goToPage("nieuwegroep.jsp", request, response);
-                }
-            case "docenttobewerk":
-                {
-                    goToPage("bewerkgroep.jsp", request, response);
-                }
-            default:
-                break;
+            }
         }
         if(request.getParameter("verwijder") != null){
             groepen.removeVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("verwijder"));
             Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
             sessie.setAttribute("voorkeuren", voorkeuren);
+            System.out.println("De student heeft een voorkeur verwijderd");
             goToPage("student.jsp", request, response);
+
         }
+        System.out.println(sessie.getAttribute("unr"));
         System.out.println(request.getParameter("knop"));
-        if("wel".equals(request.getParameter("knop"))){
-            groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("sel"), 'J');
+        System.out.println(request.getParameter("sel"));
+        if(request.getParameter("knop") != null){
+            if("wel".equals(request.getParameter("knop"))){
+                groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("sel"), 'J');
+            }
+            if("niet".equals(request.getParameter("knop"))){
+                groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("sel"), 'N');
+            }
             Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
             sessie.setAttribute("voorkeuren", voorkeuren);
             //Collection namen = groepen.getNamen()
-            goToPage("student.jsp", request, response);
-        }
-        if("niet".equals(request.getParameter("knop"))){
-            groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("sel"), 'N');
-            Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
-            sessie.setAttribute("voorkeuren", voorkeuren);
+            System.out.println("De student heeft een voorkeur toegevoegd");
             goToPage("student.jsp", request, response);
         }
     }

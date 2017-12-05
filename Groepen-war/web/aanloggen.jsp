@@ -21,6 +21,6 @@
                     <tr><td> Paswoord </td><td><input type="password" name="j_password"></td></tr>
             </table>
             <input type="submit" value="Aanmelden"/>
-        </form>
+            </form>
     </body>
 </html>
