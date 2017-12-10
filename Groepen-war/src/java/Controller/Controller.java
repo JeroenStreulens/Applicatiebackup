@@ -41,6 +41,7 @@ public class Controller extends HttpServlet {
         Collection studenten = groepen.getUsers();
         Collection studentenzgroep = groepen.studentenZonderGroep(studenten);
         sessie.setAttribute("studenten", studenten);
+        sessie.setAttribute("studentenzgroep",studentenzgroep);
         if(request.getParameter("komvan") == null){
             if(request.isUserInRole("student")){
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
@@ -50,7 +51,7 @@ public class Controller extends HttpServlet {
             }
             else if(request.isUserInRole("docent")){
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
-                goToPage("student.jsp", request, response);
+                goToPage("docent.jsp", request, response);
             }
         }
         else{
@@ -85,12 +86,28 @@ public class Controller extends HttpServlet {
                     }
                 case "docenttonieuw":
                     {
-                        goToPage("nieuwegroep.jsp", request, response);
+                        sessie.setAttribute("nieuwgroepnr", groepen.getGroepNr());
+                        goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
                 case "docenttobewerk":
                     {
                         goToPage("bewerkgroep.jsp", request, response);
+                        break;
+                    }
+                case "bewerktobewerk":
+                    {
+                        int output;
+                        output = (int)request.getAttribute("select");
+                        System.out.println("Het nummer van de student is");
+
+                        groepen.voegGroepToe((int)sessie.getAttribute("nieuwgroepnr"),output );
+                        goToPage("bewerkgroep.jsp", request, response);
+                        break;
+                    }
+                case "bewerktodocent":
+                    {
+                        goToPage("docent.jsp", request, response);
                         break;
                     }
                 default:
@@ -106,9 +123,9 @@ public class Controller extends HttpServlet {
             goToPage("student.jsp", request, response);
 
         }
-        System.out.println(sessie.getAttribute("unr"));
-        System.out.println(request.getParameter("knop"));
-        System.out.println(request.getParameter("sel"));
+        System.out.println("Het nummer van de student is");
+        System.out.println(sessie.getAttribute("output"));
+
         if(request.getParameter("knop") != null){
             if("wel".equals(request.getParameter("knop"))){
                 groepen.maakVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("sel"), 'J');

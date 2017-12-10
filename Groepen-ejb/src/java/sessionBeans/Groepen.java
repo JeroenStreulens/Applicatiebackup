@@ -73,9 +73,14 @@ public class Groepen implements GroepenLocal {
         return studenten;
     }
     
+    public void voegGroepToe(int groepnr, int studentnr){
+        ApGroepen nieuw = new ApGroepen(groepnr, studentnr);
+        em.persist(nieuw);
+    }
+}
+    
     //public void getGroepNr(){
      //   Query q = em.createNamedQuery("ApVoorkeur.findByVsnrOsnr");
         //q.setParameter("vsnr", Integer.parseInt(vsnr));
         //q.setParameter("osnr", Integer.parseInt(osnr));
     //}
-}

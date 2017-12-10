@@ -21,4 +21,5 @@ public interface GroepenLocal {
     public void removeVoorkeur(String vsnr, String osnr);
     public int getGroepNr();
     public Collection studentenZonderGroep(Collection studenten);
+    public void voegGroepToe(int groepnr, int studentnr);
 }
