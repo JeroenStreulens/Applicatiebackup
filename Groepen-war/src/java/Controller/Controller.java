@@ -39,9 +39,12 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessie = request.getSession();
         Collection studenten = groepen.getUsers();
+        Collection studenteningroep = groepen.studentenInGroep();
         Collection studentenzgroep = groepen.studentenZonderGroep(studenten);
         sessie.setAttribute("studenten", studenten);
+        sessie.setAttribute("studenteningroep",studenteningroep);
         sessie.setAttribute("studentenzgroep",studentenzgroep);
+        
         if(request.getParameter("komvan") == null){
             if(request.isUserInRole("student")){
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
@@ -51,6 +54,7 @@ public class Controller extends HttpServlet {
             }
             else if(request.isUserInRole("docent")){
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
+                sessie.setAttribute("groepnrsverzameling",groepen.getGroepen());
                 goToPage("docent.jsp", request, response);
             }
         }
@@ -86,27 +90,30 @@ public class Controller extends HttpServlet {
                     }
                 case "docenttonieuw":
                     {
-                        sessie.setAttribute("nieuwgroepnr", groepen.getGroepNr());
+                        sessie.setAttribute("groepnr", groepen.getNieuwGroepNr());
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
                 case "docenttobewerk":
                     {
+                        sessie.setAttribute("groepnr", request.getParameter("groepnr"));
+                        //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr(request.getParameter("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
+                        System.out.println(studentenzgroep);
                         break;
                     }
                 case "bewerktobewerk":
                     {
-                        int output;
-                        output = (int)request.getAttribute("select");
-                        System.out.println("Het nummer van de student is");
-
-                        groepen.voegGroepToe((int)sessie.getAttribute("nieuwgroepnr"),output );
+                        String nummers = request.getParameter("select");
+                        int nummeri=Integer.parseInt(nummers);
+                        groepen.voegGroepToe((Integer)sessie.getAttribute("groepnr"),nummeri );
+                        //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((String)request.getParameter("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
                 case "bewerktodocent":
                     {
+                        sessie.setAttribute("groepnrsverzameling",groepen.getGroepen());
                         goToPage("docent.jsp", request, response);
                         break;
                     }
@@ -123,8 +130,8 @@ public class Controller extends HttpServlet {
             goToPage("student.jsp", request, response);
 
         }
-        System.out.println("Het nummer van de student is");
-        System.out.println(sessie.getAttribute("output"));
+        //System.out.println("Het nummer van de student is");
+        //System.out.println(sessie.getAttribute("output"));
 
         if(request.getParameter("knop") != null){
             if("wel".equals(request.getParameter("knop"))){

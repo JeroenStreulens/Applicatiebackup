@@ -45,7 +45,7 @@ public class ApGroepen implements Serializable {
     }
 
     public ApGroepenPK getApGroepenPK() {
-        return apGroepenPK;
+        return this.apGroepenPK;
     }
 
     public void setApGroepenPK(ApGroepenPK apGroepenPK) {

@@ -57,11 +57,15 @@ public class Groepen implements GroepenLocal {
         em.remove(q.getSingleResult());
     }
     
-    public int getGroepNr(){
+    public int getNieuwGroepNr(){
     int groepnr;
     groepnr=(int)em.createNamedQuery("ApGroepen.findMaxgrp").getSingleResult();
     groepnr+=1;
     return groepnr;
+    }
+    
+    public Collection getGroepen(){
+        return em.createNamedQuery("ApGroepen.findGnr").getResultList();
     }
     
     public Collection studentenZonderGroep(Collection studenten){
@@ -73,10 +77,22 @@ public class Groepen implements GroepenLocal {
         return studenten;
     }
     
-    public void voegGroepToe(int groepnr, int studentnr){
+    public Collection studentenInGroep(){
+         return em.createNamedQuery("ApGroepen.findallstudents").getResultList();
+    }
+    
+    //public Collection getStudentenMetGnr(String gnr){
+    //    Query q = em.createNamedQuery("ApGroepen.findByGnr");
+    //    q.setParameter("gnr", Integer.parseInt(gnr));
+    //    return q.getResultList();
+    //}
+    
+    public void voegGroepToe(Integer groepnr, int studentnr){
         ApGroepen nieuw = new ApGroepen(groepnr, studentnr);
         em.persist(nieuw);
     }
+    
+    
 }
     
     //public void getGroepNr(){

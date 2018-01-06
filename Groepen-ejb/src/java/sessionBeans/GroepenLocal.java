@@ -19,7 +19,10 @@ public interface GroepenLocal {
     public void maakVoorkeur(String snr, String osnr, char voorkeur);
     public Collection getVoorkeur(String snr);
     public void removeVoorkeur(String vsnr, String osnr);
-    public int getGroepNr();
+    public int getNieuwGroepNr();
     public Collection studentenZonderGroep(Collection studenten);
-    public void voegGroepToe(int groepnr, int studentnr);
+    public Collection studentenInGroep();
+    //public Collection getStudentenMetGnr(String gnr);
+    public void voegGroepToe(Integer groepnr, int studentnr);
+    public Collection getGroepen();
 }
