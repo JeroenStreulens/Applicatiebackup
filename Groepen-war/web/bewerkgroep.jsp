@@ -24,6 +24,7 @@
             </datalist>
             <button type="submit" value="Toevoegen">Toevoegen</button>
             <input type="hidden" name="komvan" value="bewerktobewerk" />
+            
             <input list="studentenzgroept" name="select">
             <datalist id="studentenzgroept">
             <c:forEach var="studt" items="${sessionScope.studenteningroep}">

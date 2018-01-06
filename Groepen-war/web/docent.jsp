@@ -25,7 +25,7 @@
                 <form action=<c:out value="ctrl.do" /> method="post">
                     <tr>
                         <td><input type="text" name="groepnr" value="${groep}" readonly/></td>
-                        <td><input type="submit" value="Bewerkgroep" /></td>
+                        <td><input type="submit" value="Bewerk groep" /></td>
                     </tr>
                 <input type="hidden" name="komvan" value="docenttobewerk"/>
                 </form>

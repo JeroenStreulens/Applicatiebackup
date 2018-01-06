@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  *
  * @author woute
+ , @NamedQuery(name = "ApGroepen.findallstudents", query = "SELECT distinct(a.apGroepenPK.gsnr) FROM ApGroepen a ")
  */
 @Entity
 @Table(name = "ap_groepen")

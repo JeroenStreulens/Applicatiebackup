@@ -40,10 +40,9 @@ public class Controller extends HttpServlet {
         HttpSession sessie = request.getSession();
         Collection studenten = groepen.getUsers();
         Collection studenteningroep = groepen.studentenInGroep();
-        Collection studentenzgroep = groepen.studentenZonderGroep(studenten);
+        
         sessie.setAttribute("studenten", studenten);
         sessie.setAttribute("studenteningroep",studenteningroep);
-        sessie.setAttribute("studentenzgroep",studentenzgroep);
         
         if(request.getParameter("komvan") == null){
             if(request.isUserInRole("student")){
@@ -55,6 +54,8 @@ public class Controller extends HttpServlet {
             else if(request.isUserInRole("docent")){
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
                 sessie.setAttribute("groepnrsverzameling",groepen.getGroepen());
+                sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
+
                 goToPage("docent.jsp", request, response);
             }
         }
@@ -99,14 +100,14 @@ public class Controller extends HttpServlet {
                         sessie.setAttribute("groepnr", request.getParameter("groepnr"));
                         //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr(request.getParameter("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
-                        System.out.println(studentenzgroep);
                         break;
                     }
                 case "bewerktobewerk":
                     {
                         String nummers = request.getParameter("select");
                         int nummeri=Integer.parseInt(nummers);
-                        groepen.voegGroepToe((Integer)sessie.getAttribute("groepnr"),nummeri );
+                        groepen.voegGroepToe(Integer.parseInt((String)sessie.getAttribute("groepnr")),nummeri );
+                        sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
                         //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((String)request.getParameter("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
