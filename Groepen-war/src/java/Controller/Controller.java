@@ -97,7 +97,7 @@ public class Controller extends HttpServlet {
                     }
                 case "docenttobewerk":
                     {
-                        sessie.setAttribute("groepnr", request.getParameter("groepnr"));
+                        sessie.setAttribute("groepnr", Integer.parseInt(request.getParameter("groepnr")));
                         //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr(request.getParameter("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
@@ -106,7 +106,8 @@ public class Controller extends HttpServlet {
                     {
                         String nummers = request.getParameter("select");
                         int nummeri=Integer.parseInt(nummers);
-                        groepen.voegGroepToe(Integer.parseInt((String)sessie.getAttribute("groepnr")),nummeri );
+                        
+                        groepen.voegGroepToe(((Integer)sessie.getAttribute("groepnr")),nummeri );
                         sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
                         //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((String)request.getParameter("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
