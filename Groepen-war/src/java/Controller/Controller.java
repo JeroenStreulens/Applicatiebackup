@@ -7,6 +7,7 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -92,13 +93,15 @@ public class Controller extends HttpServlet {
                 case "docenttonieuw":
                     {
                         sessie.setAttribute("groepnr", groepen.getNieuwGroepNr());
+                        sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
+                        sessie.setAttribute("studentindezegroep", new ArrayList());
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
                 case "docenttobewerk":
                     {
                         sessie.setAttribute("groepnr", Integer.parseInt(request.getParameter("groepnr")));
-                        //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr(request.getParameter("groepnr")));
+                        sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
@@ -109,7 +112,7 @@ public class Controller extends HttpServlet {
                         
                         groepen.voegGroepToe(((Integer)sessie.getAttribute("groepnr")),nummeri );
                         sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
-                        //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((String)request.getParameter("groepnr")));
+                        sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }

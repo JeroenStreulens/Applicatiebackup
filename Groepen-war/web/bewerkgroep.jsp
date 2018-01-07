@@ -24,15 +24,17 @@
             </datalist>
             <button type="submit" value="Toevoegen">Toevoegen</button>
             <input type="hidden" name="komvan" value="bewerktobewerk" />
-            
+        </form>
+          <%--     
             <input list="studentenzgroept" name="select">
             <datalist id="studentenzgroept">
             <c:forEach var="studt" items="${sessionScope.studenteningroep}">
                 <option value="${studt}"><c:out value="${studt}" /></option>
             </c:forEach>
             </datalist>
-        </form>
-        <%--    
+        
+          --%> 
+            
         <table>
             <c:forEach var="groepstudent" items="${sessionScope.studentindezegroep}">
                 <tr>
@@ -40,7 +42,7 @@
                 </tr>
             </c:forEach>
         </table>
-        --%>    
+           
         <form method="post" action='<c:out value="ctrl.do" />' >
             <button type="submit" value="Toevoegen">Ga naar overzicht</button>
             <input type="hidden" name="komvan" value="bewerktodocent" />

@@ -22,7 +22,7 @@ public interface GroepenLocal {
     public int getNieuwGroepNr();
     public Collection studentenZonderGroep(Collection studenten);
     public Collection studentenInGroep();
-    //public Collection getStudentenMetGnr(String gnr);
+    public Collection getStudentenMetGnr(Integer gnr);
     public void voegGroepToe(Integer groepnr, int studentnr);
     public Collection getGroepen();
 }

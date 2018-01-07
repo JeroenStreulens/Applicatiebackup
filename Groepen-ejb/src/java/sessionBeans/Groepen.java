@@ -83,15 +83,15 @@ public class Groepen implements GroepenLocal {
          return em.createNamedQuery("ApGroepen.findallstudents").getResultList();
     }
     
-    //public Collection getStudentenMetGnr(String gnr){
-    //    Query q = em.createNamedQuery("ApGroepen.findByGnr");
-    //    q.setParameter("gnr", Integer.parseInt(gnr));
-    //    return q.getResultList();
-    //}
-    
     public void voegGroepToe(Integer groepnr, int studentnr){
         ApGroepen nieuw = new ApGroepen(groepnr, studentnr);
         em.persist(nieuw);
+    }
+    
+    public Collection getStudentenMetGnr(Integer gnr){
+        Query q = em.createNamedQuery("ApGroepen.findByGnr");
+        q.setParameter("gnr", gnr);
+        return q.getResultList();
     }
     
     
