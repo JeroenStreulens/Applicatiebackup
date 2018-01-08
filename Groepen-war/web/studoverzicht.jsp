@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bevestiging</title>
+        <title>Overzicht</title>
     </head>
     <body>
         <form action=<c:out value="ctrl.do" /> method="post">
@@ -18,7 +18,7 @@
                 <tr><th>Naam student</th><th>Voorkeur</th></tr>
                 <c:forEach var="voor" items="${sessionScope.voorkeuren}">
                     <tr>
-                        <td><c:out value="${voor.getApVoorkeurPK().getOsnr.getUnaam()}" /></td>
+                        <td><c:out value="${voor.getNaam()}" /></td>
                         <td><c:out value="${voor.getVoorkeur()}" /></td>
                     </tr>
                 </c:forEach>
@@ -30,3 +30,4 @@
         </form>
     </body>
 </html>
+<%@include file="/WEB-INF/jspf/footer.jspf" %>

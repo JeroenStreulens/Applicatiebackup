@@ -23,6 +23,13 @@ public class Voorkeur {
         naam = n;
     }
 
+    public Voorkeur(int vnr, int onr, char c) {
+        vsnr = vnr;
+        osnr = onr;
+        voorkeur = c;
+        naam = null;
+    }
+
     public int getVsnr() {
         return vsnr;
     }
@@ -37,6 +44,10 @@ public class Voorkeur {
 
     public String getNaam() {
         return naam;
+    }
+    
+    public void setNaam(String s){
+        naam = s;
     }
     
     

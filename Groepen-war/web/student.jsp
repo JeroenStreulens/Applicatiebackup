@@ -30,9 +30,9 @@
                 <tr><th>Naam student</th><th>Voorkeur</th><th>Verwijder</th></tr>
                 <c:forEach var="voor" items="${sessionScope.voorkeuren}">
                     <tr>
-                        <td><c:out value="${voor.getApVoorkeurPK().getOsnr()}" /></td>
+                        <td><c:out value="${voor.getNaam()}" /></td>
                         <td><c:out value="${voor.getVoorkeur()}" /></td>
-                        <td><button type="submit" name="verwijder" value="${voor.getApVoorkeurPK().getOsnr()}" >Verwijder</button></td>
+                        <td><button type="submit" name="verwijder" value="${voor.getOsnr()}" >Verwijder</button></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -44,3 +44,4 @@
         </form>
     </body>
 </html>
+<%@include file="/WEB-INF/jspf/footer.jspf" %>
