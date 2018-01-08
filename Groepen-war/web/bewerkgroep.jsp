@@ -37,9 +37,13 @@
             
         <table>
             <c:forEach var="groepstudent" items="${sessionScope.studentindezegroep}">
-                <tr>
-                    <td><input type="text" name="student" value="${groepstudent.getApGroepenPK().getGsnr()}" readonly/></td>
-                </tr>
+                <form method="post" action='<c:out value="ctrl.do" />' >
+                    <tr>
+                        <td><input type="text" name="student" value="${groepstudent.getApGroepenPK().getGsnr()}" readonly/></td>
+                        <td><button type="submit" value="Toevoegen">Verwijder</button></td>
+                        <input type="hidden" name="komvan" value="bewerktodelete" />
+                    </tr>
+                </form>
             </c:forEach>
         </table>
            

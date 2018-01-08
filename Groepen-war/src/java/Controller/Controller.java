@@ -123,6 +123,15 @@ public class Controller extends HttpServlet {
                         goToPage("docent.jsp", request, response);
                         break;
                     }
+                case "bewerktodelete":
+                    {
+                        String studenttodelete = request.getParameter("student");
+                        groepen.verwijderUitGroep(studenttodelete);
+                        sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
+                        sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
+                        goToPage("bewerkgroep.jsp", request, response);
+                        break;
+                    }
                 default:
                     break;
 

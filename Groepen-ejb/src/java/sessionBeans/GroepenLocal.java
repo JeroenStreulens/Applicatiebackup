@@ -25,5 +25,6 @@ public interface GroepenLocal {
     public Collection studentenInGroep();
     public Collection getStudentenMetGnr(Integer gnr);
     public void voegGroepToe(Integer groepnr, int studentnr);
+    public void verwijderUitGroep(String student);
     public Collection getGroepen();
 }
