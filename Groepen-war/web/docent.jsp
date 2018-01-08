@@ -10,11 +10,36 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Docent pagina</title>
     </head>
     <body>
         <h1>Welkom </h1>
         <h2>Hieronder vindt u een overzicht van de reeds gemaakte groepen:</h2>
+        <table>
+            <tr>
+                <td>Groepnr</td>
+                <td>Bewerken?</td>
+            </tr>
+            
+            <c:forEach var="groep" items="${sessionScope.groepnrsverzameling}">
+                <form action=<c:out value="ctrl.do" /> method="post">
+                    <tr>
+                        <td><input type="text" name="groepnr" value="${groep}" readonly/></td>
+                        <td><input type="submit" value="Bewerk groep" /></td>
+                    </tr>
+                <input type="hidden" name="komvan" value="docenttobewerk"/>
+                </form>
+            </c:forEach>
+            
+        </table>
+        <%--
+        <datalist id="studententest">
+            <c:forEach var="studententest" items="${sessionScope.studententest}">
+                <option value="${studententest.getUnr()}"><c:out value="${studententest.getUnr()}" /></option>
+            </c:forEach>
+        </datalist>
+        --%>
+
        <%--  <c:forEach var="groep" items="${sessionScope.studenten}">
                     <option value="${stud.getUnr()}"><c:out value="${stud.getNaam()}" /></option>
                     <button type="submit" name="wel" value="${stud.getUnr}" >Wel</button>

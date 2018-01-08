@@ -16,9 +16,14 @@ import javax.ejb.Local;
 public interface GroepenLocal {
     
     public Collection getUsers();
+    public Collection getStudenten();
     public void maakVoorkeur(String snr, String osnr, char voorkeur);
     public Collection getVoorkeur(String snr);
     public void removeVoorkeur(String vsnr, String osnr);
-    public int getGroepNr();
+    public int getNieuwGroepNr();
     public Collection studentenZonderGroep(Collection studenten);
+    public Collection studentenInGroep();
+    public Collection getStudentenMetGnr(Integer gnr);
+    public void voegGroepToe(Integer groepnr, int studentnr);
+    public Collection getGroepen();
 }
