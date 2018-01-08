@@ -39,7 +39,8 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessie = request.getSession();
-        Collection studenten = groepen.getUsers();
+        Collection studenten = groepen.getStudenten();
+
         Collection studenteningroep = groepen.studentenInGroep();
         
         sessie.setAttribute("studenten", studenten);

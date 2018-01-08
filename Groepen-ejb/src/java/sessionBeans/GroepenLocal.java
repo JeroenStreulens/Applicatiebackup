@@ -16,6 +16,7 @@ import javax.ejb.Local;
 public interface GroepenLocal {
     
     public Collection getUsers();
+    public Collection getStudenten();
     public void maakVoorkeur(String snr, String osnr, char voorkeur);
     public Collection getVoorkeur(String snr);
     public void removeVoorkeur(String vsnr, String osnr);

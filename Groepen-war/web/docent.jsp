@@ -32,7 +32,13 @@
             </c:forEach>
             
         </table>
-        
+        <%--
+        <datalist id="studententest">
+            <c:forEach var="studententest" items="${sessionScope.studententest}">
+                <option value="${studententest.getUnr()}"><c:out value="${studententest.getUnr()}" /></option>
+            </c:forEach>
+        </datalist>
+        --%>
 
        <%--  <c:forEach var="groep" items="${sessionScope.studenten}">
                     <option value="${stud.getUnr()}"><c:out value="${stud.getNaam()}" /></option>
