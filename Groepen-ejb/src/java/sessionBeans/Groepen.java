@@ -82,6 +82,31 @@ public class Groepen implements GroepenLocal {
         em.remove(q.getSingleResult());
     }
     
+    public int nameToUnr(String naam){
+        Query q = em.createNamedQuery("ApUsers.findByUnaam");
+        q.setParameter("unaam", naam);
+        ApUsers student = (ApUsers)q.getSingleResult();
+        return student.getUnr();
+    }
+    
+    public Collection groepToNamen(List<ApGroepen> groepobjecten){
+        List namen=new ArrayList();
+        for(int i = 0; i < groepobjecten.size(); i++){
+            Query q = em.createNamedQuery("ApUsers.findByUnr");
+            q.setParameter("unr", groepobjecten.get(i).getApGroepenPK().getGsnr());
+            namen.add(q.getSingleResult());
+        }
+        return namen;
+    }
+    
+    public List getStudentenMetGnr(Integer gnr){
+        Query q = em.createNamedQuery("ApGroepen.findByGnr");
+        q.setParameter("gnr", gnr);
+        List studenten = new ArrayList<ApGroepen>();
+        studenten.addAll(q.getResultList());
+        return studenten;
+    }
+    
     public int getNieuwGroepNr(){
     int groepnr;
     groepnr=(int)em.createNamedQuery("ApGroepen.findMaxgrp").getSingleResult();
@@ -123,20 +148,13 @@ public class Groepen implements GroepenLocal {
         em.persist(nieuw);
     }
     
-    public void verwijderUitGroep(String student){
+    public void verwijderUitGroep(Integer student){
         Query q = em.createNamedQuery("ApGroepen.findByGsnr");
-        q.setParameter("gsnr", Integer.parseInt(student));
+        q.setParameter("gsnr", student);
         em.remove(q.getSingleResult());        
     }
     
-    public Collection getStudentenMetGnr(Integer gnr){
-        Query q = em.createNamedQuery("ApGroepen.findByGnr");
-        q.setParameter("gnr", gnr);
-        return q.getResultList();
-    }
-    
-
-    
+       
     
 }
     

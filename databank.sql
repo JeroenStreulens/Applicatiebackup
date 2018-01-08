@@ -43,7 +43,7 @@ create table AP_Groepen(
 );
 
 
-insert into AP_Users VALUES(0,'Wouter Mauriën', 'qwerty', 'n');
+insert into AP_Users VALUES(0,'Wouter Maurien', 'qwerty', 'n');
 insert into AP_Users VALUES(1,'Jeroen Streulens', 'azerty', 'n');
 insert into AP_Users VALUES(2, 'Mathias Wens', 'ikkomuitdekast', 'n');
 insert into AP_Users VALUES (3,'Den Herman','unix', null);

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -102,18 +103,21 @@ public class Controller extends HttpServlet {
                 case "docenttobewerk":
                     {
                         sessie.setAttribute("groepnr", Integer.parseInt(request.getParameter("groepnr")));
-                        sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
+                        List test=groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
+                        sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test));
+                        //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
                 case "bewerktobewerk":
                     {
-                        String nummers = request.getParameter("select");
-                        int nummeri=Integer.parseInt(nummers);
-                        
+                        String naam = request.getParameter("select");
+                        int nummeri=groepen.nameToUnr(naam);
                         groepen.voegGroepToe(((Integer)sessie.getAttribute("groepnr")),nummeri );
                         sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
-                        sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
+                        List test=groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
+                        sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test));
+                        
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
@@ -126,7 +130,7 @@ public class Controller extends HttpServlet {
                 case "bewerktodelete":
                     {
                         String studenttodelete = request.getParameter("student");
-                        groepen.verwijderUitGroep(studenttodelete);
+                        groepen.verwijderUitGroep(groepen.nameToUnr(studenttodelete));
                         sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
                         sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);

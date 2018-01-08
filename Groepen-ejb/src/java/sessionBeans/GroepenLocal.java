@@ -5,6 +5,7 @@
  */
 package sessionBeans;
 
+import entityBeans.ApGroepen;
 import java.util.*;
 import javax.ejb.Local;
 
@@ -20,11 +21,13 @@ public interface GroepenLocal {
     public void maakVoorkeur(String snr, String osnr, char voorkeur);
     public Collection getVoorkeur(String snr);
     public void removeVoorkeur(String vsnr, String osnr);
+    public int nameToUnr(String naam);
+    public Collection groepToNamen(List<ApGroepen> groepobjecten);
     public int getNieuwGroepNr();
     public Collection studentenZonderGroep(Collection studenten);
     public Collection studentenInGroep();
-    public Collection getStudentenMetGnr(Integer gnr);
+    public List getStudentenMetGnr(Integer gnr);
     public void voegGroepToe(Integer groepnr, int studentnr);
-    public void verwijderUitGroep(String student);
+    public void verwijderUitGroep(Integer student);
     public Collection getGroepen();
 }

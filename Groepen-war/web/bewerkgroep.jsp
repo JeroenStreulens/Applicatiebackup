@@ -19,7 +19,7 @@
             <input list="studentenzgroep" name="select">
             <datalist id="studentenzgroep">
             <c:forEach var="stud" items="${sessionScope.studentenzgroep}">
-                <option value="${stud.getUnr()}"><c:out value="${stud.getUnaam()}" /></option>
+                <option value="${stud.getUnaam()}"><c:out value="${stud.getUnaam()}" /></option>
             </c:forEach>
             </datalist>
             <button type="submit" value="Toevoegen">Toevoegen</button>
@@ -39,7 +39,7 @@
             <c:forEach var="groepstudent" items="${sessionScope.studentindezegroep}">
                 <form method="post" action='<c:out value="ctrl.do" />' >
                     <tr>
-                        <td><input type="text" name="student" value="${groepstudent.getApGroepenPK().getGsnr()}" readonly/></td>
+                        <td><input type="text" name="student" value="${groepstudent.getUnaam()}" readonly/></td>
                         <td><button type="submit" value="Toevoegen">Verwijder</button></td>
                         <input type="hidden" name="komvan" value="bewerktodelete" />
                     </tr>
