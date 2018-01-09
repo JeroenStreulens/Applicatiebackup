@@ -13,20 +13,37 @@
         <title>Overzicht</title>
     </head>
     <body>
+        <div>
+            Beste student, hieronder vindt u een overzicht van uw gekozen voorkeuren. 
+        </div>
         <form action=<c:out value="ctrl.do" /> method="post">
             <table>
                 <tr><th>Naam student</th><th>Voorkeur</th></tr>
                 <c:forEach var="voor" items="${sessionScope.voorkeuren}">
-                    <tr>
+                    <c:choose>
+                        <c:when test="${voor.getVoorkeur() == 'J'}" >
+                            <tr bgcolor="lime">
+                        </c:when>
+                        <c:when test="${voor.getVoorkeur() == 'N'}" >
+                            <tr bgcolor="red">
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                        </c:otherwise>
+                    </c:choose>
                         <td><c:out value="${voor.getNaam()}" /></td>
                         <td><c:out value="${voor.getVoorkeur()}" /></td>
                     </tr>
                 </c:forEach>
-            </table>
-        </form>
-        <form action=<c:out value="ctrl.do" /> method="post" >
+            </table><br>
+            Indien u tevreden bent met uw keuze kan u via onderstaande knop bevestigen. Let op: bevestigen kan maar &eacute;&eacute;nmaal. Na bevestiging kan u uw voorkeuren ook niet meer wijzigen. <br>
             <input type="hidden" name="komvan" value="studoverzicht"/>
             <input type="submit" value="Bevestig" />
+        </form>
+        <form action=<c:out value="ctrl.do" /> method="post">
+            Indien u nog voorkeuren wil toevoegen ka u teruggaan naar het keuzemenu.<br>
+            <input type="hidden" name="komvan" value="meer" />
+            <input type="submit" value="Keuzemenu" />
         </form>
     </body>
 </html>

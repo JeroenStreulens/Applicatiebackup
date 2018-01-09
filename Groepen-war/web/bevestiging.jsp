@@ -14,10 +14,21 @@
     </head>
     <body>
         <form action=<c:out value="ctrl.do" /> method="post">
+            Hieronder vindt u een overzicht van uw bevestigde voorkeuren. De docent zal deze gebruiken om de groepen op te bouwen.
             <table>
                 <tr><th>Naam student</th><th>Voorkeur</th></tr>
                 <c:forEach var="voor" items="${sessionScope.voorkeuren}">
-                    <tr>
+                    <c:choose>
+                        <c:when test="${voor.getVoorkeur() == 'J'}" >
+                            <tr bgcolor="lime">
+                        </c:when>
+                        <c:when test="${voor.getVoorkeur() == 'N'}" >
+                            <tr bgcolor="red">
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                        </c:otherwise>
+                    </c:choose>
                         <td><c:out value="${voor.getNaam()}" /></td>
                         <td><c:out value="${voor.getVoorkeur()}" /></td>
                     </tr>

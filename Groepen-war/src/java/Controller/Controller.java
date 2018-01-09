@@ -44,9 +44,9 @@ public class Controller extends HttpServlet {
         Collection studenten = groepen.getStudenten();
         sessie.setAttribute("studenten", studenten);
         if(request.getParameter("komvan") == null){
-//            sessie = request.getSession();
-//            studenten = groepen.getStudenten();
-//            sessie.setAttribute("studenten", studenten);
+            sessie = request.getSession();
+            studenten = groepen.getStudenten();
+            sessie.setAttribute("studenten", studenten);
             System.out.println("Aanmelden");
             if(request.isUserInRole("student")){
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
@@ -99,13 +99,18 @@ public class Controller extends HttpServlet {
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
+                case "meer":
+                    {
+                        goToPage("student.jsp", request, response);
+                        break;
+                    }
                 case "afmelden":
                     {
                         System.out.println("Afmelden");
                         System.out.println(sessie.getAttribute("unr"));
                         sessie.invalidate();
                         goToPage("index.jsp", request, response);
-                        break;
+                        return;
                     }
                 default:
                     break;
@@ -120,7 +125,7 @@ public class Controller extends HttpServlet {
             goToPage("student.jsp", request, response);
 
         }
-        System.out.println(sessie.getAttribute("unr"));
+//        System.out.println(sessie.getAttribute("unr"));
 //        System.out.println(request.getParameter("knop"));
 //        System.out.println(request.getParameter("sel"));
         if(request.getParameter("knop") != null){
