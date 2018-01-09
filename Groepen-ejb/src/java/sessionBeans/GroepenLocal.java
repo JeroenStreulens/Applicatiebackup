@@ -21,6 +21,7 @@ public interface GroepenLocal {
     public void maakVoorkeur(String snr, String osnr, char voorkeur);
     public Collection getVoorkeur(String snr);
     public void removeVoorkeur(String vsnr, String osnr);
+    public List welkeProblemen(List<ApGroepen> studenten);
     public int nameToUnr(String naam);
     public Collection groepToNamen(List<ApGroepen> groepobjecten);
     public int getNieuwGroepNr();
@@ -30,4 +31,5 @@ public interface GroepenLocal {
     public void voegGroepToe(Integer groepnr, int studentnr);
     public void verwijderUitGroep(Integer student);
     public Collection getGroepen();
+    public int aantalStudenten(Collection lijst);
 }

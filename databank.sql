@@ -46,6 +46,7 @@ create table AP_Groepen(
 insert into AP_Users VALUES(0,'Wouter Maurien', 'qwerty', 'n');
 insert into AP_Users VALUES(1,'Jeroen Streulens', 'azerty', 'n');
 insert into AP_Users VALUES(2, 'Mathias Wens', 'ikkomuitdekast', 'n');
+insert into AP_Users VALUES(5, 'Kristof De Ridder', 'cssguy', 'n');
 insert into AP_Users VALUES (3,'Den Herman','unix', null);
 insert into AP_Users VALUES (4,'Dessie','sponzenridder', null);
 insert into AP_Rollen VALUES('student', 0);
@@ -53,3 +54,9 @@ insert into AP_Rollen VALUES('student', 1);
 insert into AP_Rollen VALUES('student', 2);
 insert into AP_Rollen VALUES('docent', 3);
 insert into AP_Rollen VALUES('docent', 4);
+insert into AP_Rollen VALUES('student', 5);
+insert into AP_Voorkeur VALUES(1,2,'N');
+insert into AP_Voorkeur VALUES(1,0,'J');
+insert into AP_Voorkeur VALUES(1,5,'J');
+insert into AP_Voorkeur VALUES(5,0,'J');
+

@@ -46,7 +46,20 @@
                 </form>
             </c:forEach>
         </table>
+          
+        <h3>Conflicten:</h3>
+        <table>
+            <tr>
+                <td>Student over wie het gaat </td>
+                <td>Conflict</td>
+            </tr>
+            <c:forEach var="problemen" items="${sessionScope.problemen}">
+                <td>${problemen}</td>
+                <td>${problemen}</td>
+            </c:forEach>
            
+        </table>
+          
         <form method="post" action='<c:out value="ctrl.do" />' >
             <button type="submit" value="Toevoegen">Ga naar overzicht</button>
             <input type="hidden" name="komvan" value="bewerktodocent" />

@@ -56,9 +56,11 @@ public class Controller extends HttpServlet {
             }
             else if(request.isUserInRole("docent")){
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
+                studenten = groepen.getStudenten();
                 sessie.setAttribute("groepnrsverzameling",groepen.getGroepen());
                 sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
-
+                sessie.setAttribute("aantaltodo",groepen.aantalStudenten((Collection)sessie.getAttribute("studentenzgroep")));
+                sessie.setAttribute("aantalstudenten",groepen.aantalStudenten((Collection)sessie.getAttribute("studenten")));
                 goToPage("docent.jsp", request, response);
             }
         }
@@ -75,6 +77,7 @@ public class Controller extends HttpServlet {
                             break;
                         }
                         else if(request.getAttribute("rol").equals("docent")){
+                            
                             System.out.println("Aangemeld als docent");
                             goToPage("docent.jsp", request, response);
                             break;
@@ -105,6 +108,7 @@ public class Controller extends HttpServlet {
                         sessie.setAttribute("groepnr", Integer.parseInt(request.getParameter("groepnr")));
                         List test=groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
                         sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test));
+                        sessie.setAttribute("problemen",groepen.welkeProblemen(test));
                         //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
@@ -114,15 +118,17 @@ public class Controller extends HttpServlet {
                         String naam = request.getParameter("select");
                         int nummeri=groepen.nameToUnr(naam);
                         groepen.voegGroepToe(((Integer)sessie.getAttribute("groepnr")),nummeri );
-                        sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
+                        sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep((Collection)sessie.getAttribute("studenten")));
                         List test=groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
+                        sessie.setAttribute("problemen",groepen.welkeProblemen(test));
                         sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test));
-                        
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
                 case "bewerktodocent":
                     {
+                        sessie.setAttribute("aantaltodo",groepen.aantalStudenten((Collection)sessie.getAttribute("studentenzgroep")));
+                        sessie.setAttribute("aantalstudenten",groepen.aantalStudenten((Collection)sessie.getAttribute("studenten")));
                         sessie.setAttribute("groepnrsverzameling",groepen.getGroepen());
                         goToPage("docent.jsp", request, response);
                         break;
@@ -132,7 +138,9 @@ public class Controller extends HttpServlet {
                         String studenttodelete = request.getParameter("student");
                         groepen.verwijderUitGroep(groepen.nameToUnr(studenttodelete));
                         sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
-                        sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
+                        List test = groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
+                        sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test) );
+                        sessie.setAttribute("problemen",groepen.welkeProblemen(test));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }

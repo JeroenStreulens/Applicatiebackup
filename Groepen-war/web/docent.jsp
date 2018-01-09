@@ -32,10 +32,11 @@
             </c:forEach>
             
         </table>
-
+        
        <form action=<c:out value="ctrl.do" /> method="post">
             <input type="hidden" name="komvan" value="docenttonieuw"/>
             <input type="submit" value="Nieuwe groep" />
         </form>
+        <h3>U moet nog ${sessionScope.aantaltodo} van de ${sessionScope.aantalstudenten} studenten aan een groep toewijzen.</h3>
     </body>
 </html>
