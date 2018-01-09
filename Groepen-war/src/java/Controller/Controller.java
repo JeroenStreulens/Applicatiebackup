@@ -109,7 +109,7 @@ public class Controller extends HttpServlet {
                         List test=groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
                         sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test));
                         sessie.setAttribute("problemen",groepen.welkeProblemen(test));
-                        //sessie.setAttribute("studentindezegroep", groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr")));
+                        sessie.setAttribute("problemennamen",sessie.getAttribute("problemen"));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
@@ -121,6 +121,7 @@ public class Controller extends HttpServlet {
                         sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep((Collection)sessie.getAttribute("studenten")));
                         List test=groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
                         sessie.setAttribute("problemen",groepen.welkeProblemen(test));
+                        sessie.setAttribute("problemennamen",sessie.getAttribute("problemen"));
                         sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
@@ -141,6 +142,7 @@ public class Controller extends HttpServlet {
                         List test = groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
                         sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test) );
                         sessie.setAttribute("problemen",groepen.welkeProblemen(test));
+                        sessie.setAttribute("problemennamen",sessie.getAttribute("problemen"));
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }

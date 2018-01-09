@@ -82,11 +82,12 @@ public class Groepen implements GroepenLocal {
         em.remove(q.getSingleResult());
     }
     
-    public List welkeProblemen(List<ApGroepen> studenten){
+    /**public List welkeProblemen(List<ApGroepen> studenten){
         if(studenten.size()==0){
             return new ArrayList<ApVoorkeur>();
         }
         List problemen = new ArrayList<ApVoorkeur>();
+        
         for(int i=0;i<studenten.size();i++){
             List tijdelijkelijst = new ArrayList<ApVoorkeur>();
             Query q = em.createNamedQuery("ApVoorkeur.findByVsnr");
@@ -111,24 +112,90 @@ public class Groepen implements GroepenLocal {
             Query q = em.createNamedQuery("ApVoorkeur.findByOsnr");
             q.setParameter("osnr", studenten.get(i).getApGroepenPK().getGsnr());
             tijdelijkelijst.addAll(q.getResultList()); //bevat een lijst van studenten die al dan niet met student(i) in de groep willen zitten
-            for(int j=0;j<tijdelijkelijst.size();j++){
+           
+            for(int j=0;j<tijdelijkelijst.size();j++){//loop over de voorkeuren van 1 student
+                boolean ingroep=false;
                 ApVoorkeur tijdelijkevk = (ApVoorkeur)tijdelijkelijst.get(j);
                 int vrager = tijdelijkevk.getApVoorkeurPK().getVsnr();
-                for(int k=0; k<studenten.size();k++){
-                    if(tijdelijkevk.getVoorkeur()=='J'){
+                if(tijdelijkevk.getVoorkeur()=='J'){ //Is er een persoon die met de student in de groep wil zitten, zo ja...
+                    for(int k=0; k<studenten.size();k++){//Kijken of de student die met hem in de groep wil zitten, in de groep zit
                         if(vrager==studenten.get(k).getApGroepenPK().getGsnr()){
+                            ingroep=true;
                             break;
                         }
                     }
-                    else{
-                    
+                    if(!ingroep){
+                        problemen.add(tijdelijkevk);
                     }
-                problemen.add(tijdelijkevk);
                 }
             }
         }
         
-        return problemen;
+    return problemen;
+    }
+    **/
+        public List welkeProblemen(List<ApGroepen> studenten){
+        if(studenten.size()==0){
+            return new ArrayList<String>();
+        }
+        List problemen = new ArrayList<String>();
+        
+        for(int i=0;i<studenten.size();i++){
+            List tijdelijkelijst = new ArrayList<ApVoorkeur>();
+            Query q = em.createNamedQuery("ApVoorkeur.findByVsnr");
+            int vrager=studenten.get(i).getApGroepenPK().getGsnr();
+            q.setParameter("vsnr", vrager);
+            tijdelijkelijst.addAll(q.getResultList());
+            for(int j=0;j<tijdelijkelijst.size();j++){
+                ApVoorkeur tijdelijkevk = (ApVoorkeur)tijdelijkelijst.get(j);
+                int ontvanger = tijdelijkevk.getApVoorkeurPK().getOsnr();
+ 
+                for(int k=0; k<studenten.size();k++){
+                    if(tijdelijkevk.getVoorkeur()=='N'){
+                        if(ontvanger==studenten.get(k).getApGroepenPK().getGsnr()){ 
+                            String s = this.unrToName(vrager)+" wil niet in de groep zitten met "+this.unrToName(ontvanger);
+                            problemen.add(s);
+                            break;
+                        }
+                    }
+                }
+                
+            }
+        }
+        for(int i=0;i<studenten.size();i++){
+            List tijdelijkelijst = new ArrayList<ApVoorkeur>();
+            Query q = em.createNamedQuery("ApVoorkeur.findByOsnr");
+            int ontvanger = studenten.get(i).getApGroepenPK().getGsnr();
+            q.setParameter("osnr",ontvanger);
+            tijdelijkelijst.addAll(q.getResultList()); //bevat een lijst van studenten die al dan niet met student(i) in de groep willen zitten
+           
+            for(int j=0;j<tijdelijkelijst.size();j++){//loop over de voorkeuren van 1 student
+                boolean ingroep=false;
+                ApVoorkeur tijdelijkevk = (ApVoorkeur)tijdelijkelijst.get(j);
+                int vrager = tijdelijkevk.getApVoorkeurPK().getVsnr();
+                if(tijdelijkevk.getVoorkeur()=='J'){ //Is er een persoon die met de student in de groep wil zitten, zo ja...
+                    for(int k=0; k<studenten.size();k++){//Kijken of de student die met hem in de groep wil zitten, in de groep zit
+                        if(vrager==studenten.get(k).getApGroepenPK().getGsnr()){
+                            ingroep=true;
+                            break;
+                        }
+                    }
+                    if(!ingroep){
+                        String s = this.unrToName(vrager)+" wil in de groep zitten met "+this.unrToName(ontvanger);
+                        problemen.add(s);
+                    }
+                }
+            }
+        }
+        
+    return problemen;
+    }
+    
+    public String unrToName(int unr){
+        Query q = em.createNamedQuery("ApUsers.findByUnr");
+        q.setParameter("unr", unr);
+        ApUsers student = (ApUsers)q.getSingleResult();
+        return student.getUnaam();
     }
     
     public int nameToUnr(String naam){

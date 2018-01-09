@@ -10,11 +10,34 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="scriptjes.js"></script>
         <title>Bewerken</title>
     </head>
     <body>
         <h1>Bewerk groep met groepnr <c:out value="${sessionScope.groepnr}" /></h1>
-        Selecteer de persoon die je wil toevoegen
+        <h3>Selecteer de persoon die je wil toevoegen<h3>
+        
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+       
+        <table id="myTable">
+            <tr class="header">
+                <th style="width:60%;">Naam</th>
+                <th style="width:40%;"></th>
+            </tr>
+            <c:forEach var="stud" items="${sessionScope.studentenzgroep}">
+            <form method="post" action='<c:out value="ctrl.do" />' >
+            <tr>
+                <td>${stud.getUnaam()}</td>
+                <td><button type="submit" value="Toevoegen">Toevoegen</button>
+                <input type="hidden" name="select" value="${stud.getUnaam()}" />
+                <input type="hidden" name="komvan" value="bewerktobewerk" /></td>
+            </tr>
+             </form>
+            </c:forEach>
+        </table>
+       
+        <%--
         <form method="post" action='<c:out value="ctrl.do" />' >
             <input list="studentenzgroep" name="select">
             <datalist id="studentenzgroep">
@@ -25,6 +48,7 @@
             <button type="submit" value="Toevoegen">Toevoegen</button>
             <input type="hidden" name="komvan" value="bewerktobewerk" />
         </form>
+        --%>
           <%--     
             <input list="studentenzgroept" name="select">
             <datalist id="studentenzgroept">
@@ -34,8 +58,25 @@
             </datalist>
         
           --%> 
-            
-        <table>
+        <br><br>
+        <h3>In deze groep zit momenteel:<h3>
+        <table id="myTable2">
+            <tr class="header">
+                <th style="width:60%;">Naam</th>
+                <th style="width:40%;"></th>
+            </tr>
+            <c:forEach var="groepstudent" items="${sessionScope.studentindezegroep}">
+            <form method="post" action='<c:out value="ctrl.do" />' >
+            <tr>
+                <td>${groepstudent.getUnaam()}</td>
+                <input type="hidden" name="student" value="${groepstudent.getUnaam()}" readonly/>
+                <td><button type="submit" value="Toevoegen">Verwijder</button></td>
+                <input type="hidden" name="komvan" value="bewerktodelete" />
+            </tr>
+             </form>
+            </c:forEach>
+        </table>
+        <%--  <table>
             <c:forEach var="groepstudent" items="${sessionScope.studentindezegroep}">
                 <form method="post" action='<c:out value="ctrl.do" />' >
                     <tr>
@@ -45,25 +86,29 @@
                     </tr>
                 </form>
             </c:forEach>
-        </table>
+        </table> --%>
           
-        <h3>Conflicten:</h3>
+        <h3>Conflicten:</h3
+        </table>
         <table>
-            <tr>
-                <td>Student over wie het gaat </td>
-                <td>Conflict</td>
-            </tr>
             <c:forEach var="problemen" items="${sessionScope.problemen}">
+            <form method="post" action='<c:out value="ctrl.do" />' >
+                <tr>
                 <td>${problemen}</td>
-                <td>${problemen}</td>
+                <td><button type="submit" value="Losop">Los op</button></td>
+                <input type="hidden" name="komvan" value="bewerktolosop" />
+                </tr>
+            </form>
             </c:forEach>
            
         </table>
           
         <form method="post" action='<c:out value="ctrl.do" />' >
             <button type="submit" value="Toevoegen">Ga naar overzicht</button>
+            
             <input type="hidden" name="komvan" value="bewerktodocent" />
         </form>
         
     </body>
 </html>
+
