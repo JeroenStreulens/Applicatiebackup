@@ -5,6 +5,7 @@
  */
 package sessionBeans;
 
+import Other.Voorkeur;
 import javax.ejb.Stateless;
 import java.util.*;
 import javax.persistence.*;
@@ -19,20 +20,6 @@ public class Groepen implements GroepenLocal {
 
     @PersistenceContext
     private EntityManager em;
-    
-    public Collection getUsers(){
-        /*Collection users = null;
-        Query q1 = em.createNamedQuery("ApRollen.findByRol");
-        q1.setParameter("rol", "student");
-        ArrayList<ApRollen> studenten = new ArrayList<ApRollen>(q1.getResultList());
-        Query q2 = em.createNamedQuery("ApUsers.findByUnr");
-        for(int i = 0; i < studenten.size(); i++){
-            q2.setParameter("unr", studenten.get(i).getUnr());
-            users.add(q2.getSingleResult());
-        }
-        return users;*/
-        return em.createNamedQuery("ApUsers.findAll").getResultList();
-    }
     
     public Collection getStudenten(){
         List users = new ArrayList();
@@ -62,10 +49,21 @@ public class Groepen implements GroepenLocal {
     public Collection getVoorkeur(String snr){
         Query q = em.createNamedQuery("ApVoorkeur.findByVsnr");
         q.setParameter("vsnr", Integer.parseInt(snr));
-        for(int i = 0; i < q.getResultList().size(); i++){
-            System.out.println(q.getResultList().get(i).toString());
+        Query naam = em.createNamedQuery("ApUsers.findByUnr");
+        Collection voorkeuren = q.getResultList();
+        ArrayList<Object> vk = new ArrayList<>();
+        vk.addAll(voorkeuren);
+        ArrayList<Voorkeur> voorkeur = new ArrayList<>();
+        System.out.println("EJB");
+        for(int i = 0; i < vk.size(); i++){
+            ApVoorkeur ap = (ApVoorkeur) vk.get(i);
+            Voorkeur v = new Voorkeur(Integer.parseInt(snr), ap.getApVoorkeurPK().getOsnr(), (char)ap.getVoorkeur());
+            naam.setParameter("unr", ap.getApVoorkeurPK().getOsnr());
+            v.setNaam(((ApUsers)naam.getSingleResult()).getUnaam());
+            System.out.println(v);
+            voorkeur.add(v);
         }
-        return q.getResultList();
+        return voorkeur;
     }
     
     public void removeVoorkeur(String vsnr, String osnr){
@@ -75,7 +73,26 @@ public class Groepen implements GroepenLocal {
         System.out.println(q.getSingleResult().toString());
         em.remove(q.getSingleResult());
     }
-    
+   
+    public boolean getBevestigd(String unr){
+        Query q = em.createNamedQuery("ApUsers.findByUnr");
+        q.setParameter("unr", Integer.parseInt(unr));
+        ApUsers gebruiker = ((ApUsers) q.getSingleResult());
+        if(gebruiker.getBevestigd().equals(new Character('j'))){
+            return true;
+        }
+        else{
+            return false;
+        } 
+    }
+    public void setBevestig(String unr){
+         Query q = em.createNamedQuery("ApUsers.findByUnr");
+         q.setParameter("unr", Integer.parseInt(unr));
+         ApUsers gebruiker = ((ApUsers) q.getSingleResult());
+         gebruiker.setBevestigd(new Character('j'));
+         em.persist(gebruiker);
+    }
+
     public int getNieuwGroepNr(){
     int groepnr;
     groepnr=(int)em.createNamedQuery("ApGroepen.findMaxgrp").getSingleResult();
@@ -112,8 +129,6 @@ public class Groepen implements GroepenLocal {
         q.setParameter("gnr", gnr);
         return q.getResultList();
     }
-    
-    
 }
     
     //public void getGroepNr(){
