@@ -18,11 +18,11 @@
         <div class="center">
         <h1>Bewerk groep met groepnr <c:out value="${sessionScope.groepnr}" /></h1>
         <h3>In deze groep zit momenteel:<h3>
-        <table id="myTable2">
+        <table id="myTable">
             <tr class="header">
                 <c:if test="${!sessionScope.bevestigd}">
-                <th style="width:60%;">Naam</th>
-                <th style="width:40%;"></th>
+                <th style="width:50%;">Naam</th>
+                <th style="width:50%;"></th>
                 </c:if>
                 <c:if test="${sessionScope.bevestigd}">
                 <th style="width:100%;">Naam</th>
@@ -61,8 +61,8 @@
        
         <table id="myTable">
             <tr class="header">
-                <th style="width:60%;">Naam</th>
-                <th style="width:40%;"></th>
+                <th style="width:50%;">Naam</th>
+                <th style="width:50%;"></th>
             </tr>
             <c:forEach var="stud" items="${sessionScope.studentenzgroep}">
             <form method="post" action='<c:out value="ctrl.do" />' >
@@ -103,7 +103,7 @@
         <c:choose>
             <c:when test="${!empty sessionScope.problemen}" >
                 <h3>Conflicten:</h3>
-                    <table>
+                    <table id="myTable2">
                         <c:forEach var="problemen" items="${sessionScope.problemen}">
                             <form method="post" action='<c:out value="ctrl.do" />' >
                                 <tr>

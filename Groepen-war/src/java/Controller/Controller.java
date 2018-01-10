@@ -59,15 +59,12 @@ public class Controller extends HttpServlet {
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
                 Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
                 sessie.setAttribute("voorkeuren", voorkeuren);
-              // Wouter, is dit de bevestiging pagina waar de student naartoe gaat nadat docent bevestigd heeft?
+
              //   System.out.println("Voorkeuren");
-             //   for(Iterator it = voorkeuren.iterator(); it.hasNext();){
-             //       System.out.println(it.next());
-             //   }
-             //   if(groepen.getBevestigd(sessie.getAttribute("unr").toString()) == true){
-             //       goToPage("bevestiging.jsp", request, response);
-             //   }
-             //   else{
+                //for(Iterator it = voorkeuren.iterator(); it.hasNext();){
+                 //   System.out.println(it.next());
+                //}
+                
                 if(groepen.controlebevestigd()==true){
                     int gnr=groepen.getGroepnrvanStudent(Integer.parseInt((String)sessie.getAttribute("unr")));
                     sessie.setAttribute("groepnr",gnr);
@@ -77,8 +74,13 @@ public class Controller extends HttpServlet {
                     goToPage("groepstudent.jsp", request, response);
                 }
                 else{
+                    if(groepen.getBevestigd(sessie.getAttribute("unr").toString()) == true){
+                    goToPage("bevestiging.jsp", request, response);
+                    }
+                    else{
                     sessie.setAttribute("bevestigd", false);
                     goToPage("student.jsp", request, response);
+                    }
                 }
             }
             else if(request.isUserInRole("docent")){
@@ -149,7 +151,10 @@ public class Controller extends HttpServlet {
                         System.out.println(sessie.getAttribute("unr"));
                         sessie.invalidate();
                         newRequest("ctrl.do", request, response);
+                      
                         return;
+                    }
+                        
                 case "bewerktobewerk":
                     {
                         String naam = request.getParameter("select");

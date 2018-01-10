@@ -18,6 +18,8 @@ body {
     text-align: center;
 }
 
+
+
 #myInput {
     background-image: url('/css/searchicon.png'); /* Add a search icon to input */
     background-position: 10px 12px; /* Position the search icon */
@@ -37,7 +39,7 @@ body {
 }
 
 #myTable th, #myTable td,#myTable2 th, #myTable2 td  {
-    text-align: left; /* Left-align text */
+    text-align: center; /* Left-align text */
     padding: 12px; /* Add padding */
 }
 
@@ -46,7 +48,7 @@ body {
     border-bottom: 1px solid #ddd; 
 }
 
-#myTable tr.header, #myTable tr:hover,#myTable2 tr.header, #myTable2 tr:hover  {
+#myTable tr.header, #myTable tr:hover  {
     /* Add a grey background color to the table header and on hover */
     background-color: #999999;
 }

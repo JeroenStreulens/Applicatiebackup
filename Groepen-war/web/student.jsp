@@ -11,7 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="zoeken.js" type="text/javascript"> </script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="scriptjes.js"></script>
         <title>Student</title>
     </head>
     <body onload="studenten()">
