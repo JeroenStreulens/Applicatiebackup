@@ -21,5 +21,10 @@ public interface GroepenLocal {
     public void removeVoorkeur(String vsnr, String osnr);
     public boolean getBevestigd(String unr);
     public void setBevestig(String unr);
-    
+    public int getNieuwGroepNr();
+    public Collection studentenZonderGroep(Collection studenten);
+    public Collection studentenInGroep();
+    public Collection getStudentenMetGnr(Integer gnr);
+    public void voegGroepToe(Integer groepnr, int studentnr);
+    public Collection getGroepen();
 }
