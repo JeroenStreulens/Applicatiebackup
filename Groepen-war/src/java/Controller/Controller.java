@@ -5,11 +5,16 @@
  */
 package Controller;
 
+import Other.Voorkeur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import java.util.Iterator;
+
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,17 +46,28 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessie = request.getSession();
         Collection studenten = groepen.getStudenten();
-
         Collection studenteningroep = groepen.studentenInGroep();
-        
         sessie.setAttribute("studenten", studenten);
         sessie.setAttribute("studenteningroep",studenteningroep);
         
         if(request.getParameter("komvan") == null){
+            sessie = request.getSession();
+            studenten = groepen.getStudenten();
+            sessie.setAttribute("studenten", studenten);
+            System.out.println("Aanmelden");
             if(request.isUserInRole("student")){
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
                 Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
                 sessie.setAttribute("voorkeuren", voorkeuren);
+              // Wouter, is dit de bevestiging pagina waar de student naartoe gaat nadat docent bevestigd heeft?
+             //   System.out.println("Voorkeuren");
+             //   for(Iterator it = voorkeuren.iterator(); it.hasNext();){
+             //       System.out.println(it.next());
+             //   }
+             //   if(groepen.getBevestigd(sessie.getAttribute("unr").toString()) == true){
+             //       goToPage("bevestiging.jsp", request, response);
+             //   }
+             //   else{
                 if(groepen.controlebevestigd()==true){
                     int gnr=groepen.getGroepnrvanStudent(Integer.parseInt((String)sessie.getAttribute("unr")));
                     sessie.setAttribute("groepnr",gnr);
@@ -70,6 +86,7 @@ public class Controller extends HttpServlet {
                 studenten = groepen.getStudenten();
                 sessie.setAttribute("groepen",groepen.getGroepen());
                 sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
+
                 sessie.setAttribute("aantaltodo",groepen.aantalStudenten((Collection)sessie.getAttribute("studentenzgroep")));
                 sessie.setAttribute("aantalstudenten",groepen.aantalStudenten((Collection)sessie.getAttribute("studenten")));
                 if(groepen.controlebevestigd()==true){
@@ -82,21 +99,24 @@ public class Controller extends HttpServlet {
                     goToPage("docent.jsp", request, response);
                     
                 }
+
             }
         }
+        
         else{
             switch (request.getParameter("komvan")){
-                
+
                 case "student":
                     {                    
-                        goToPage("bevestiging.jsp", request, response);
+                        goToPage("studoverzicht.jsp", request, response);
                         System.out.println("De student wil bevestigen");
                         break;
                     }
                 case "studoverzicht":
                     {
-                        goToPage("studoverzicht.jsp", request, response);
+                        goToPage("bevestiging.jsp", request, response);
                         System.out.println("De student heeft bevestigd");
+                        groepen.setBevestig(sessie.getAttribute("unr").toString());
                         break;
                     }
                 case "docenttonieuw":
@@ -118,6 +138,18 @@ public class Controller extends HttpServlet {
                         goToPage("bewerkgroep.jsp", request, response);
                         break;
                     }
+                case "meer":
+                    {
+                        goToPage("student.jsp", request, response);
+                        break;
+                    }
+                case "afmelden":
+                    {
+                        System.out.println("Afmelden");
+                        System.out.println(sessie.getAttribute("unr"));
+                        sessie.invalidate();
+                        newRequest("ctrl.do", request, response);
+                        return;
                 case "bewerktobewerk":
                     {
                         String naam = request.getParameter("select");
@@ -177,6 +209,7 @@ public class Controller extends HttpServlet {
 
             }
         }
+        
         if(request.getParameter("verwijder") != null){
             groepen.removeVoorkeur(sessie.getAttribute("unr").toString(), request.getParameter("verwijder"));
             Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
@@ -185,8 +218,6 @@ public class Controller extends HttpServlet {
             goToPage("student.jsp", request, response);
 
         }
-        //System.out.println("Het nummer van de student is");
-        //System.out.println(sessie.getAttribute("output"));
 
         if(request.getParameter("knop") != null){
             if("wel".equals(request.getParameter("knop"))){
@@ -197,7 +228,6 @@ public class Controller extends HttpServlet {
             }
             Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
             sessie.setAttribute("voorkeuren", voorkeuren);
-            //Collection namen = groepen.getNamen()
             System.out.println("De student heeft een voorkeur toegevoegd");
             goToPage("student.jsp", request, response);
         }
@@ -206,6 +236,10 @@ public class Controller extends HttpServlet {
     public void goToPage(String s, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         RequestDispatcher view = request.getRequestDispatcher(s);
         view.forward(request, response);
+    }
+    
+    public void newRequest(String s, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.sendRedirect(s);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
