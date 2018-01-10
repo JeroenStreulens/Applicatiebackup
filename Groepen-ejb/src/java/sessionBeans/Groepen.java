@@ -215,6 +215,14 @@ public class Groepen implements GroepenLocal {
         return namen;
     }
     
+    public Integer getGroepnrvanStudent(Integer unr){
+        Query q = em.createNamedQuery("ApGroepen.findByGsnr");
+        q.setParameter("gsnr", unr);
+        ApGroepen groep = (ApGroepen)q.getSingleResult();
+        int groepnr = groep.getApGroepenPK().getGnr();
+        return groepnr;
+    }
+    
     public List getStudentenMetGnr(Integer gnr){
         Query q = em.createNamedQuery("ApGroepen.findByGnr");
         q.setParameter("gnr", gnr);
@@ -278,8 +286,32 @@ public class Groepen implements GroepenLocal {
         return aantal;
     }
     
-       
+    public void bevestigGroepen(Integer docent){
+        Query q = em.createNamedQuery("ApUsers.findByUnr");
+        q.setParameter("unr", docent);
+        ApUsers docentobject = (ApUsers)q.getSingleResult();
+        docentobject.setBevestigd('j');
+        em.persist(docentobject);
+    }
     
+    public boolean controlebevestigd(){
+        boolean bevestigd = false;
+        Query q = em.createNamedQuery("ApRollen.findByRol");
+        q.setParameter("rol", "docent");
+        ArrayList<ApRollen> docentnr = new ArrayList<ApRollen>();
+        docentnr.addAll(q.getResultList());
+        for(int i=0;i<docentnr.size();i++){
+            int unr=docentnr.get(i).getUnr();
+            Query q2 = em.createNamedQuery("ApUsers.findByUnr");
+            q2.setParameter("unr", unr);
+            ApUsers docent = (ApUsers)q2.getSingleResult();
+            if(docent.getBevestigd()=='j'){
+                bevestigd=true;
+                break;
+            }
+        }
+        return bevestigd;
+    }
 }
     
     //public void getGroepNr(){

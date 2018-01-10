@@ -90,20 +90,25 @@
           --%> 
         <br><br>
         
-          
-        <h3>Conflicten:</h3
-        </table>
-        <table>
-            <c:forEach var="problemen" items="${sessionScope.problemen}">
-            <form method="post" action='<c:out value="ctrl.do" />' >
-                <tr>
-                <td>${problemen}</td>
-                </tr>
-            </form>
-            </c:forEach>
+        <c:choose>
+            <c:when test="${!empty sessionScope.problemen}" >
+                <h3>Conflicten:</h3>
+                    <table>
+                        <c:forEach var="problemen" items="${sessionScope.problemen}">
+                            <form method="post" action='<c:out value="ctrl.do" />' >
+                                <tr>
+                                <td>${problemen}</td>
+                                </tr>
+                            </form>
+                        </c:forEach>
            
-        </table>
+                    </table>
           
+            </c:when>
+            <c:otherwise>
+                Er zijn geen conflicten!
+            </c:otherwise>
+        </c:choose>
         <form method="post" action='<c:out value="ctrl.do" />' >
             <button type="submit" value="Toevoegen">Ga naar overzicht</button>
             
