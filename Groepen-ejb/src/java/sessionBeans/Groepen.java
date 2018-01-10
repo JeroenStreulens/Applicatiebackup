@@ -227,17 +227,20 @@ public class Groepen implements GroepenLocal {
     int groepnr;
     groepnr=(int)em.createNamedQuery("ApGroepen.findMaxgrp").getSingleResult();
     groepnr+=1;
-    Integer i;
-    for(i=1; i<=groepnr; i++){
+    int nieuwgroepnr=0;
+    for(int i=1; i<=groepnr; i++){
         Query q = em.createNamedQuery("ApGroepen.findByGnr");
         q.setParameter("gnr", i);
         List resultaat = q.getResultList();
-        if(resultaat.size()==1){
+        if(resultaat.isEmpty()){
+            nieuwgroepnr=i;
             break;
         }
-    groepnr=i;
+        else{
+            continue;
+        }
     }
-    return groepnr;
+    return nieuwgroepnr;
     }
     
     public Collection getGroepen(){

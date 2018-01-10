@@ -26,8 +26,9 @@
             <c:forEach var="groep" items="${sessionScope.groepnrsverzameling}">
                 <form action=<c:out value="ctrl.do" /> method="post">
                     <tr>
-                        <td><input type="text" name="groepnr" value="${groep}" readonly/></td>
+                        <td>${groep}</td>
                         <td><input type="submit" value="Bewerk groep" /></td>
+                        <input type="hidden" name="groepnr" value="${groep}"/>
                     </tr>
                 <input type="hidden" name="komvan" value="docenttobewerk"/>
                 </form>
