@@ -27,7 +27,7 @@
                 <form action=<c:out value="ctrl.do" /> method="post">
                     <tr>
                         <td>${groep}</td>
-                        <td><input type="submit" value="Bewerk groep" /></td>
+                        <td><input type="submit" value="Bekijk groep" /></td>
                         <input type="hidden" name="groepnr" value="${groep}"/>
                     </tr>
                 <input type="hidden" name="komvan" value="docenttobewerk"/>
@@ -35,15 +35,17 @@
             </c:forEach>
             
         </table>
-        
+        <c:if test="${!sessionScope.bevestigd}">
        <form action=<c:out value="ctrl.do" /> method="post">
             <input type="hidden" name="komvan" value="docenttonieuw"/>
             <input type="submit" value="Nieuwe groep" />
         </form>
-        <h3>U moet nog ${sessionScope.aantaltodo} van de ${sessionScope.aantalstudenten} studenten aan een groep toewijzen.</h3>
+        
+            <h3>U moet nog ${sessionScope.aantaltodo} van de ${sessionScope.aantalstudenten} studenten aan een groep toewijzen.</h3>
         <form action=<c:out value="ctrl.do" /> method="post">
             <input type="hidden" name="komvan" value="docenttobevestig"/>
             <input type="submit" value="Maak deze groepen aan" />
         </form>
+            </c:if>
     </body>
 </html>

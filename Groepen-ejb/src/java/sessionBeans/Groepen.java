@@ -58,7 +58,7 @@ public class Groepen implements GroepenLocal {
         docenten.removeAll(studenten);
         return docenten;        
     }
-    
+    ///Voor studenten
     public void maakVoorkeur(String snr, String osnr, char voorkeur){
         ApVoorkeur maak = new ApVoorkeur(Integer.parseInt(snr), Integer.parseInt(osnr));
         maak.setVoorkeur(voorkeur);
@@ -133,7 +133,11 @@ public class Groepen implements GroepenLocal {
         
     return problemen;
     }
+    
+    
     **/
+    
+    ///Voor docenten
         public List welkeProblemen(List<ApGroepen> studenten){
         if(studenten.size()==0){
             return new ArrayList<String>();

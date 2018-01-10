@@ -57,9 +57,11 @@ public class Controller extends HttpServlet {
                     sessie.setAttribute("groepnr",gnr);
                     List test=groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
                     sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test));
+                    sessie.setAttribute("bevestigd", true);
                     goToPage("groepstudent.jsp", request, response);
                 }
                 else{
+                    sessie.setAttribute("bevestigd", false);
                     goToPage("student.jsp", request, response);
                 }
             }
@@ -71,10 +73,14 @@ public class Controller extends HttpServlet {
                 sessie.setAttribute("aantaltodo",groepen.aantalStudenten((Collection)sessie.getAttribute("studentenzgroep")));
                 sessie.setAttribute("aantalstudenten",groepen.aantalStudenten((Collection)sessie.getAttribute("studenten")));
                 if(groepen.controlebevestigd()==true){
-                    goToPage("overzichtgroepen.jsp", request, response);
+                    sessie.setAttribute("bevestigd", true);
+                    goToPage("docent.jsp", request, response);
+                    
                 }
                 else{
+                    sessie.setAttribute("bevestigd", false);
                     goToPage("docent.jsp", request, response);
+                    
                 }
             }
         }
@@ -180,7 +186,8 @@ public class Controller extends HttpServlet {
                 case "docenttobevestig":
                     {
                         groepen.bevestigGroepen(Integer.parseInt((String)sessie.getAttribute("unr")));
-                        goToPage("overzichtgroepen.jsp", request, response);
+                        sessie.setAttribute("bevestigd", true);
+                        goToPage("docent.jsp", request, response);
                         break;
                     }
                 case "overzichttogroep":

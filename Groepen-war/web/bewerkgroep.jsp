@@ -20,16 +20,24 @@
         <h3>In deze groep zit momenteel:<h3>
         <table id="myTable2">
             <tr class="header">
+                <c:if test="${!sessionScope.bevestigd}">
                 <th style="width:60%;">Naam</th>
                 <th style="width:40%;"></th>
+                </c:if>
+                <c:if test="${sessionScope.bevestigd}">
+                <th style="width:100%;">Naam</th>
+                </c:if>
+                
             </tr>
             <c:forEach var="groepstudent" items="${sessionScope.studentindezegroep}">
             <form method="post" action='<c:out value="ctrl.do" />' >
             <tr>
                 <td>${groepstudent.getUnaam()}</td>
-                <input type="hidden" name="student" value="${groepstudent.getUnaam()}" readonly/>
-                <td><button type="submit" value="Toevoegen">Verwijder</button></td>
-                <input type="hidden" name="komvan" value="bewerktodelete" />
+                        <c:if test="${!sessionScope.bevestigd}">
+                            <input type="hidden" name="student" value="${groepstudent.getUnaam()}" readonly/>
+                            <td><button type="submit" value="Toevoegen">Verwijder</button></td>
+                            <input type="hidden" name="komvan" value="bewerktodelete" />
+                        </c:if>
             </tr>
              </form>
             </c:forEach>
@@ -46,6 +54,7 @@
             </c:forEach>
         </table> --%>
         <br><br>
+        <c:if test="${!sessionScope.bevestigd}">
         <h3>Selecteer de persoon die je wil toevoegen<h3>
         
         <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
@@ -66,6 +75,7 @@
              </form>
             </c:forEach>
         </table>
+        </c:if>
        
         <%--
         <form method="post" action='<c:out value="ctrl.do" />' >
