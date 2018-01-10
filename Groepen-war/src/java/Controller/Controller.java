@@ -109,7 +109,7 @@ public class Controller extends HttpServlet {
                         System.out.println("Afmelden");
                         System.out.println(sessie.getAttribute("unr"));
                         sessie.invalidate();
-                        goToPage("index.jsp", request, response);
+                        newRequest("ctrl.do", request, response);
                         return;
                     }
                 default:
@@ -146,6 +146,10 @@ public class Controller extends HttpServlet {
     public void goToPage(String s, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         RequestDispatcher view = request.getRequestDispatcher(s);
         view.forward(request, response);
+    }
+    
+    public void newRequest(String s, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.sendRedirect(s);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

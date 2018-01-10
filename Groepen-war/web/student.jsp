@@ -14,35 +14,21 @@
         <script src="zoeken.js" type="text/javascript"> </script>
         <title>Student</title>
     </head>
-    <body>
+    <body onload="studenten()">
         <form action=<c:out value="ctrl.do" /> method="post">
             Selecteer de mensen met wie je wel of niet in de groep wil zitten: <br>
             <select name="sel" id="studenten">
                 <option selected disabled>Kies de naam van een medestudent</option>
                 <c:forEach var="stud" items="${sessionScope.studenten}">
                     <c:choose>
-                        <c:when test="${stud.getUnr() == sessionScope.unr}" >
-                            
-                        </c:when>
-                        <c:when test="${fn:length(sessionScope.voorkeuren) == 0}">
-                            <option value="${stud.getUnr()}"><c:out value="${stud.getUnaam()}" /></option>
-                        </c:when>
+                        <c:when test="${stud.getUnr() == sessionScope.unr}" ></c:when>
                         <c:otherwise>
-                            <c:forEach var="voor" items="${sessionScope.voorkeuren}" >
-                                <c:choose>
-                                    <c:when test="${voor.getOsnr() == stud.getUnr()}">
-                                    
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="${stud.getUnr()}"><c:out value="${stud.getUnaam()}" /></option>
-                                    </c:otherwise>
-                                </c:choose>        
-                            </c:forEach>
+                            <option value="${stud.getUnr()}"><c:out value="${stud.getUnaam()}" /></option>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
             </select> <br>
-            <input type="search" id="myInput" onkeypress="searchFunc()" placeholder="Student zoeken" /> <br>
+            <input type="search" id="myInput" onkeyup="searchFunc()" placeholder="Student zoeken" /> <br>
             <button type="submit" name="knop" value="wel" >Wel</button>
             <button type="submit" name="knop" value="niet" >Niet</button>
             <input type="hidden" name="komvan" value="pas" />
@@ -65,7 +51,7 @@
                     </c:choose>
                         <td><c:out value="${voor.getNaam()}" /></td>
                         <td><c:out value="${voor.getVoorkeur()}" /></td>
-                        <td><button type="submit" name="verwijder" value="${voor.getOsnr()}" >Verwijder</button></td>
+                        <td><button type="submit" name="verwijder" value="${voor.getOsnr()}">Verwijder</button></td>
                     </tr>
                 </c:forEach>
             </table>
