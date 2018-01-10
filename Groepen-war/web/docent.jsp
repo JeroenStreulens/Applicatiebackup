@@ -20,15 +20,16 @@
         <table>
             <tr>
                 <td>Groepnr</td>
-                <td>Bewerken?</td>
+                
             </tr>
             
-            <c:forEach var="groep" items="${sessionScope.groepnrsverzameling}">
+            <c:forEach var="groep" items="${sessionScope.groepen}">
                 <form action=<c:out value="ctrl.do" /> method="post">
                     <tr>
-                        <td>${groep}</td>
+                        <td>${groep.key}</td>
+                        <td>${groep.value}</td>
                         <td><input type="submit" value="Bekijk groep" /></td>
-                        <input type="hidden" name="groepnr" value="${groep}"/>
+                        <input type="hidden" name="groepnr" value="${groep.key}"/>
                     </tr>
                 <input type="hidden" name="komvan" value="docenttobewerk"/>
                 </form>

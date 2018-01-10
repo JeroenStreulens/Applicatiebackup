@@ -31,7 +31,7 @@ public interface GroepenLocal {
     public List getStudentenMetGnr(Integer gnr);
     public void voegGroepToe(Integer groepnr, int studentnr);
     public void verwijderUitGroep(Integer student);
-    public Collection getGroepen();
+    public Map<Integer,Integer> getGroepen();
     public int aantalStudenten(Collection lijst);
     public void bevestigGroepen(Integer docent);
     public boolean controlebevestigd();

@@ -255,8 +255,13 @@ public class Groepen implements GroepenLocal {
     return nieuwgroepnr;
     }
     
-    public Collection getGroepen(){
-        return em.createNamedQuery("ApGroepen.findGnr").getResultList();
+    public Map<Integer,Integer> getGroepen(){
+        List<Integer> groepen = em.createNamedQuery("ApGroepen.findGnr").getResultList();
+        Map<Integer, Integer> klasMap = new HashMap<Integer, Integer>();
+        for(int i=0;i<groepen.size();i++){
+            klasMap.put(groepen.get(i), this.welkeProblemen(this.getStudentenMetGnr(groepen.get(i))).size());
+        }
+        return klasMap;
     }
     
     public Collection studentenZonderGroep(Collection studenten){

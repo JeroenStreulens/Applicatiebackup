@@ -68,7 +68,7 @@ public class Controller extends HttpServlet {
             else if(request.isUserInRole("docent")){
                 sessie.setAttribute("unr", request.getUserPrincipal().getName());
                 studenten = groepen.getStudenten();
-                sessie.setAttribute("groepnrsverzameling",groepen.getGroepen());
+                sessie.setAttribute("groepen",groepen.getGroepen());
                 sessie.setAttribute("studentenzgroep",groepen.studentenZonderGroep(studenten));
                 sessie.setAttribute("aantaltodo",groepen.aantalStudenten((Collection)sessie.getAttribute("studentenzgroep")));
                 sessie.setAttribute("aantalstudenten",groepen.aantalStudenten((Collection)sessie.getAttribute("studenten")));
@@ -86,39 +86,7 @@ public class Controller extends HttpServlet {
         }
         else{
             switch (request.getParameter("komvan")){
-                case "index":
-                    {
-                        if(request.getAttribute("rol").equals("student")){
-                            sessie.setAttribute("unr", request.getUserPrincipal().getName());
-                            Collection voorkeuren = groepen.getVoorkeur(sessie.getAttribute("unr").toString());
-                            sessie.setAttribute("voorkeuren", voorkeuren);
-                            System.out.println("Aangemeld als student");
-                            if(groepen.controlebevestigd()==true){
-                                int gnr=groepen.getGroepnrvanStudent(Integer.parseInt((String)sessie.getAttribute("unr")));
-                                sessie.setAttribute("groepnr",gnr);
-                                List test=groepen.getStudentenMetGnr((Integer)sessie.getAttribute("groepnr"));
-                                sessie.setAttribute("studentindezegroep",groepen.groepToNamen(test));
-                                goToPage("groepstudent.jsp", request, response);
-                                break;
-                            }
-                            else{
-                                goToPage("student.jsp", request, response);
-                                break;
-                            }
-                        }
-                        else if(request.getAttribute("rol").equals("docent")){
-                            
-                            System.out.println("Aangemeld als docent");
-                            if(groepen.controlebevestigd()==true){
-                                goToPage("overzichtgroepen.jsp", request, response);
-                                break;
-                            }
-                            else{
-                                goToPage("docent.jsp", request, response);
-                                break;
-                            }
-                        }
-                    }
+                
                 case "student":
                     {                    
                         goToPage("bevestiging.jsp", request, response);
@@ -167,7 +135,7 @@ public class Controller extends HttpServlet {
                     {
                         sessie.setAttribute("aantaltodo",groepen.aantalStudenten((Collection)sessie.getAttribute("studentenzgroep")));
                         sessie.setAttribute("aantalstudenten",groepen.aantalStudenten((Collection)sessie.getAttribute("studenten")));
-                        sessie.setAttribute("groepnrsverzameling",groepen.getGroepen());
+                        sessie.setAttribute("groepen",groepen.getGroepen());
                         goToPage("docent.jsp", request, response);
                         break;
                     }
