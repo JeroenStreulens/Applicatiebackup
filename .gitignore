@@ -14,3 +14,5 @@
 /GroepenLib/nbproject/private/
 /GroepenLib/build/
 /GroepenLib/dist/
+Groepen-war/web/nieuwegroep.jsp
+GroepenLib/src/sessionBeans/GroepenRemote.java

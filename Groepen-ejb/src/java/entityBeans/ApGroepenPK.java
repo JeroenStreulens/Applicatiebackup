@@ -50,7 +50,7 @@ public class ApGroepenPK implements Serializable {
     public void setGsnr(int gsnr) {
         this.gsnr = gsnr;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

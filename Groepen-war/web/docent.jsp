@@ -10,45 +10,56 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="scriptjes.js"></script>
         <title>Docent pagina</title>
     </head>
     <body>
+        <div class="center">
         <h1>Welkom </h1>
+        <c:choose>
+            <c:when test="${!empty sessionScope.groepen}" >
         <h2>Hieronder vindt u een overzicht van de reeds gemaakte groepen:</h2>
-        <table>
+        <table id="myTable">
             <tr>
-                <td>Groepnr</td>
-                <td>Bewerken?</td>
+                <td style="width:40%;">Groepnr</td>
+                <td style="width:10%;"></td>
+                <td style="width:50%;"></td>
             </tr>
-            
-            <c:forEach var="groep" items="${sessionScope.groepnrsverzameling}">
+    
+            <c:forEach var="groep" items="${sessionScope.groepen}">
                 <form action=<c:out value="ctrl.do" /> method="post">
                     <tr>
-                        <td><input type="text" name="groepnr" value="${groep}" readonly/></td>
-                        <td><input type="submit" value="Bewerk groep" /></td>
+                        <td>${groep.key}</td>
+                        <td style="width:10%;">${groep.value} error(s) </td>
+                        <td><input class="button buttongrey" type="submit" value="Bekijk groep" /></td>
+                        <input type="hidden" name="groepnr" value="${groep.key}"/>
                     </tr>
                 <input type="hidden" name="komvan" value="docenttobewerk"/>
                 </form>
             </c:forEach>
             
         </table>
-        <%--
-        <datalist id="studententest">
-            <c:forEach var="studententest" items="${sessionScope.studententest}">
-                <option value="${studententest.getUnr()}"><c:out value="${studententest.getUnr()}" /></option>
-            </c:forEach>
-        </datalist>
-        --%>
-
-       <%--  <c:forEach var="groep" items="${sessionScope.studenten}">
-                    <option value="${stud.getUnr()}"><c:out value="${stud.getNaam()}" /></option>
-                    <button type="submit" name="wel" value="${stud.getUnr}" >Wel</button>
-        </c:forEach>
-       --%>
+            </c:when>
+        <c:otherwise>
+                <h3>Er zijn nog geen groepen gemaakt!<h3>
+            </c:otherwise>
+        </c:choose>
+        <c:if test="${!sessionScope.bevestigd}">
        <form action=<c:out value="ctrl.do" /> method="post">
             <input type="hidden" name="komvan" value="docenttonieuw"/>
-            <input type="submit" value="Nieuwe groep" />
+            <input class="button buttongrey" type="submit" value="Nieuwe groep" />
         </form>
+        
+            <h3>U moet nog ${sessionScope.aantaltodo} van de ${sessionScope.aantalstudenten} studenten aan een groep toewijzen.</h3>
+        <form action=<c:out value="ctrl.do" /> method="post">
+            <input type="hidden" name="komvan" value="docenttobevestig"/>
+            <input class="button buttongrey" type="submit" value="Maak deze groepen aan" />
+        </form>
+            </c:if>
+        <%@include file="/WEB-INF/jspf/footer.jspf" %> 
+        
+        </div>
     </body>
 </html>
 <%@include file="/WEB-INF/jspf/footer.jspf" %>

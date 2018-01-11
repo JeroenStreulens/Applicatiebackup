@@ -2,5 +2,5 @@
 <%@ page pageEncoding="UTF-8" %>
 <form action=<c:out value="ctrl.do" /> method="post">
     <input type="hidden" name="komvan" value="afmelden" />
-    <input type="submit" value="Afmelden" />
+    <input class="button buttongrey" type="submit" value="Afmelden" />
 </form>
