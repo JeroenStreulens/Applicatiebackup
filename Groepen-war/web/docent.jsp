@@ -59,3 +59,4 @@
         </div>
     </body>
 </html>
+<%@include file="/WEB-INF/jspf/footer.jspf" %>

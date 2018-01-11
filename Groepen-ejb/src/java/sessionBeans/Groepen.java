@@ -6,17 +6,29 @@
 package sessionBeans;
 
 import Other.Voorkeur;
-import javax.ejb.Stateless;
+import entityBeans.ApGroepen;
+import entityBeans.ApRollen;
+import entityBeans.ApUsers;
+import entityBeans.ApVoorkeur;
 import java.util.*;
-import javax.persistence.*;
-import entityBeans.*;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
  * @author woute
  */
+
+    /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 @Stateless
-public class Groepen implements GroepenLocal {
+public class Groepen implements GroepenRemote {
 
     @PersistenceContext
     private EntityManager em;
@@ -102,63 +114,7 @@ public class Groepen implements GroepenLocal {
 
 
     
-    /**public List welkeProblemen(List<ApGroepen> studenten){
-        if(studenten.size()==0){
-            return new ArrayList<ApVoorkeur>();
-        }
-        List problemen = new ArrayList<ApVoorkeur>();
-        
-        for(int i=0;i<studenten.size();i++){
-            List tijdelijkelijst = new ArrayList<ApVoorkeur>();
-            Query q = em.createNamedQuery("ApVoorkeur.findByVsnr");
-            q.setParameter("vsnr", studenten.get(i).getApGroepenPK().getGsnr());
-            tijdelijkelijst.addAll(q.getResultList());
-            for(int j=0;j<tijdelijkelijst.size();j++){
-                ApVoorkeur tijdelijkevk = (ApVoorkeur)tijdelijkelijst.get(j);
-                int ontvanger = tijdelijkevk.getApVoorkeurPK().getOsnr();
-                for(int k=0; k<studenten.size();k++){
-                    if(tijdelijkevk.getVoorkeur()=='N'){
-                        if(ontvanger==studenten.get(k).getApGroepenPK().getGsnr()){
-                            problemen.add(tijdelijkevk);
-                            break;
-                        }
-                    }
-                }
-                
-            }
-        }
-        for(int i=0;i<studenten.size();i++){
-            List tijdelijkelijst = new ArrayList<ApVoorkeur>();
-            Query q = em.createNamedQuery("ApVoorkeur.findByOsnr");
-            q.setParameter("osnr", studenten.get(i).getApGroepenPK().getGsnr());
-            tijdelijkelijst.addAll(q.getResultList()); //bevat een lijst van studenten die al dan niet met student(i) in de groep willen zitten
-           
-            for(int j=0;j<tijdelijkelijst.size();j++){//loop over de voorkeuren van 1 student
-                boolean ingroep=false;
-                ApVoorkeur tijdelijkevk = (ApVoorkeur)tijdelijkelijst.get(j);
-                int vrager = tijdelijkevk.getApVoorkeurPK().getVsnr();
-                if(tijdelijkevk.getVoorkeur()=='J'){ //Is er een persoon die met de student in de groep wil zitten, zo ja...
-                    for(int k=0; k<studenten.size();k++){//Kijken of de student die met hem in de groep wil zitten, in de groep zit
-                        if(vrager==studenten.get(k).getApGroepenPK().getGsnr()){
-                            ingroep=true;
-                            break;
-                        }
-                    }
-                    if(!ingroep){
-                        problemen.add(tijdelijkevk);
-                    }
-                }
-            }
-        }
-        
-    return problemen;
-    }
-    
-    
-    **/
-    
-    ///Voor docenten
-        public List welkeProblemen(List<ApGroepen> studenten){
+        public List welkeProblemen(List studenten){
         if(studenten.size()==0){
             return new ArrayList<String>();
         }
@@ -167,7 +123,7 @@ public class Groepen implements GroepenLocal {
         for(int i=0;i<studenten.size();i++){
             List tijdelijkelijst = new ArrayList<ApVoorkeur>();
             Query q = em.createNamedQuery("ApVoorkeur.findByVsnr");
-            int vrager=studenten.get(i).getApGroepenPK().getGsnr();
+            int vrager=((ApGroepen)studenten.get(i)).getApGroepenPK().getGsnr();
             q.setParameter("vsnr", vrager);
             tijdelijkelijst.addAll(q.getResultList());
             for(int j=0;j<tijdelijkelijst.size();j++){
@@ -176,7 +132,7 @@ public class Groepen implements GroepenLocal {
  
                 for(int k=0; k<studenten.size();k++){
                     if(tijdelijkevk.getVoorkeur()=='N'){
-                        if(ontvanger==studenten.get(k).getApGroepenPK().getGsnr()){ 
+                        if(ontvanger==((ApGroepen)studenten.get(k)).getApGroepenPK().getGsnr()){ 
                             String s = this.unrToName(vrager)+" wil niet in de groep zitten met "+this.unrToName(ontvanger);
                             problemen.add(s);
                             break;
@@ -189,7 +145,7 @@ public class Groepen implements GroepenLocal {
         for(int i=0;i<studenten.size();i++){
             List tijdelijkelijst = new ArrayList<ApVoorkeur>();
             Query q = em.createNamedQuery("ApVoorkeur.findByOsnr");
-            int ontvanger = studenten.get(i).getApGroepenPK().getGsnr();
+            int ontvanger = ((ApGroepen)studenten.get(i)).getApGroepenPK().getGsnr();
             q.setParameter("osnr",ontvanger);
             tijdelijkelijst.addAll(q.getResultList()); //bevat een lijst van studenten die al dan niet met student(i) in de groep willen zitten
            
@@ -199,7 +155,7 @@ public class Groepen implements GroepenLocal {
                 int vrager = tijdelijkevk.getApVoorkeurPK().getVsnr();
                 if(tijdelijkevk.getVoorkeur()=='J'){ //Is er een persoon die met de student in de groep wil zitten, zo ja...
                     for(int k=0; k<studenten.size();k++){//Kijken of de student die met hem in de groep wil zitten, in de groep zit
-                        if(vrager==studenten.get(k).getApGroepenPK().getGsnr()){
+                        if(vrager==((ApGroepen)studenten.get(k)).getApGroepenPK().getGsnr()){
                             ingroep=true;
                             break;
                         }
@@ -229,11 +185,11 @@ public class Groepen implements GroepenLocal {
         return student.getUnr();
     }
     
-    public Collection groepToNamen(List<ApGroepen> groepobjecten){
+    public Collection groepToNamen(List groepobjecten){
         List namen=new ArrayList();
         for(int i = 0; i < groepobjecten.size(); i++){
             Query q = em.createNamedQuery("ApUsers.findByUnr");
-            q.setParameter("unr", groepobjecten.get(i).getApGroepenPK().getGsnr());
+            q.setParameter("unr", ((ApGroepen)groepobjecten.get(i)).getApGroepenPK().getGsnr());
             namen.add(q.getSingleResult());
         }
         return namen;
@@ -247,32 +203,24 @@ public class Groepen implements GroepenLocal {
         return groepnr;
     }
     
-    public List getStudentenMetGnr(Integer gnr){
-        Query q = em.createNamedQuery("ApGroepen.findByGnr");
-        q.setParameter("gnr", gnr);
-        List studenten = new ArrayList<ApGroepen>();
-        studenten.addAll(q.getResultList());
-        return studenten;
-    }
-
     public int getNieuwGroepNr(){
-    int groepnr;
-    groepnr=(int)em.createNamedQuery("ApGroepen.findMaxgrp").getSingleResult();
-    groepnr+=1;
-    int nieuwgroepnr=0;
-    for(int i=1; i<=groepnr; i++){
-        Query q = em.createNamedQuery("ApGroepen.findByGnr");
-        q.setParameter("gnr", i);
-        List resultaat = q.getResultList();
-        if(resultaat.isEmpty()){
-            nieuwgroepnr=i;
-            break;
+        int groepnr;
+        groepnr=(int)em.createNamedQuery("ApGroepen.findMaxgrp").getSingleResult();
+        groepnr+=1;
+        int nieuwgroepnr=0;
+        for(int i=1; i<=groepnr; i++){
+            Query q = em.createNamedQuery("ApGroepen.findByGnr");
+            q.setParameter("gnr", i);
+            List resultaat = q.getResultList();
+            if(resultaat.isEmpty()){
+                nieuwgroepnr=i;
+                break;
+            }
+            else{
+                continue;
+            }
         }
-        else{
-            continue;
-        }
-    }
-    return nieuwgroepnr;
+        return nieuwgroepnr;
     }
     
     public Map<Integer,Integer> getGroepen(){
@@ -343,10 +291,26 @@ public class Groepen implements GroepenLocal {
         return bevestigd;
     }
 
-}
+    public List getStudentenMetGnr(Integer gnr){
+        Query q = em.createNamedQuery("ApGroepen.findByGnr");
+        q.setParameter("gnr", gnr);
+        return q.getResultList();
+    }
     
-    //public void getGroepNr(){
-     //   Query q = em.createNamedQuery("ApVoorkeur.findByVsnrOsnr");
-        //q.setParameter("vsnr", Integer.parseInt(vsnr));
-        //q.setParameter("osnr", Integer.parseInt(osnr));
-    //}
+    public String getStudentNaam(Integer unr){
+        Query q = em.createNamedQuery("ApUsers.findByUnr");
+        q.setParameter("unr", unr);
+        ApUsers student = ((ApUsers) q.getSingleResult());
+        return student.getUnaam();
+    }
+    
+    public ArrayList<String> getStudentNamen(Integer gnr){
+        List groepen = getStudentenMetGnr(gnr);
+        ArrayList<String> namen = new ArrayList<>();
+        for(int i = 0; i < groepen.size(); i++){
+            ApGroepen groep = ((ApGroepen) groepen.get(i));
+            namen.add(getStudentNaam(groep.getApGroepenPK().getGsnr()));
+        }
+        return namen;
+    }
+}

@@ -5,16 +5,15 @@
  */
 package sessionBeans;
 
-import entityBeans.ApGroepen;
 import java.util.*;
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author woute
  */
-@Local
-public interface GroepenLocal {
+@Remote
+public interface GroepenRemote {
     
     public Collection getStudenten();
     public void maakVoorkeur(String snr, String osnr, char voorkeur);
@@ -24,9 +23,9 @@ public interface GroepenLocal {
     public boolean getBevestigd(String unr);
     public void setBevestig(String unr);
 
-    public List welkeProblemen(List<ApGroepen> studenten);
+    public List welkeProblemen(List studenten);
     public int nameToUnr(String naam);
-    public Collection groepToNamen(List<ApGroepen> groepobjecten);
+    public Collection groepToNamen(List groepobjecten);
 
     public int getNieuwGroepNr();
     public Collection studentenZonderGroep(Collection studenten);
@@ -39,4 +38,6 @@ public interface GroepenLocal {
     public int aantalStudenten(Collection lijst);
     public void bevestigGroepen(Integer docent);
     public boolean controlebevestigd();
-}
+    public ArrayList<String> getStudentNamen(Integer gnr);
+    public String getStudentNaam(Integer unr);         
+    }
