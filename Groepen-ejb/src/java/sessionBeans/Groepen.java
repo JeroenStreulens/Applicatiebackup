@@ -6,17 +6,32 @@
 package sessionBeans;
 
 import Other.Voorkeur;
+import entityBeans.ApGroepen;
+import entityBeans.ApRollen;
+import entityBeans.ApUsers;
+import entityBeans.ApVoorkeur;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import javax.ejb.Stateless;
-import java.util.*;
-import javax.persistence.*;
-import entityBeans.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
  * @author woute
  */
+
+    /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 @Stateless
-public class Groepen implements GroepenLocal {
+public class Groepen implements GroepenRemote {
 
     @PersistenceContext
     private EntityManager em;
@@ -124,15 +139,26 @@ public class Groepen implements GroepenLocal {
         em.persist(nieuw);
     }
     
-    public Collection getStudentenMetGnr(Integer gnr){
+    public List getStudentenMetGnr(Integer gnr){
         Query q = em.createNamedQuery("ApGroepen.findByGnr");
         q.setParameter("gnr", gnr);
         return q.getResultList();
     }
-}
     
-    //public void getGroepNr(){
-     //   Query q = em.createNamedQuery("ApVoorkeur.findByVsnrOsnr");
-        //q.setParameter("vsnr", Integer.parseInt(vsnr));
-        //q.setParameter("osnr", Integer.parseInt(osnr));
-    //}
+    public String getStudentNaam(Integer unr){
+        Query q = em.createNamedQuery("ApUsers.findByUnr");
+        q.setParameter("unr", unr);
+        ApUsers student = ((ApUsers) q.getSingleResult());
+        return student.getUnaam();
+    }
+    
+    public ArrayList<String> getStudentNamen(Integer gnr){
+        List groepen = getStudentenMetGnr(gnr);
+        ArrayList<String> namen = new ArrayList<>();
+        for(int i = 0; i < groepen.size(); i++){
+            ApGroepen groep = ((ApGroepen) groepen.get(i));
+            namen.add(getStudentNaam(groep.getApGroepenPK().getGsnr()));
+        }
+        return namen;
+    }
+}
