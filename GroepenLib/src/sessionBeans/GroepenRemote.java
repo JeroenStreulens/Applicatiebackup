@@ -5,7 +5,6 @@
  */
 package sessionBeans;
 
-import entityBeans.ApGroepen;
 import java.util.*;
 import javax.ejb.Remote;
 
@@ -24,14 +23,13 @@ public interface GroepenRemote {
     public boolean getBevestigd(String unr);
     public void setBevestig(String unr);
 
-    public List welkeProblemen(List<ApGroepen> studenten);
+    public List welkeProblemen(List studenten);
     public int nameToUnr(String naam);
-    public Collection groepToNamen(List<ApGroepen> groepobjecten);
+    public Collection groepToNamen(List groepobjecten);
 
     public int getNieuwGroepNr();
     public Collection studentenZonderGroep(Collection studenten);
     public Collection studentenInGroep();
-<<<<<<< HEAD:Groepen-ejb/src/java/sessionBeans/GroepenLocal.java
     public Integer getGroepnrvanStudent(Integer unr);
     public List getStudentenMetGnr(Integer gnr);
     public void voegGroepToe(Integer groepnr, int studentnr);
@@ -40,12 +38,6 @@ public interface GroepenRemote {
     public int aantalStudenten(Collection lijst);
     public void bevestigGroepen(Integer docent);
     public boolean controlebevestigd();
-=======
-    public List getStudentenMetGnr(Integer gnr);
-    public void voegGroepToe(Integer groepnr, int studentnr);
-    public Collection getGroepen();
     public ArrayList<String> getStudentNamen(Integer gnr);
     public String getStudentNaam(Integer unr);         
-    
->>>>>>> Wouter:GroepenLib/src/sessionBeans/GroepenRemote.java
-}
+    }

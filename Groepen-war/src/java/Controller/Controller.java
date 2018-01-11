@@ -154,10 +154,6 @@ public class Controller extends HttpServlet {
                       
                         return;
                     }
-<<<<<<< HEAD
-                        
-=======
->>>>>>> Wouter
                 case "bewerktobewerk":
                     {
                         String naam = request.getParameter("select");
