@@ -10,6 +10,8 @@ and open the template in the editor.
 body {
     color: #f1f1f1;
     background-image: url("background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .center {
@@ -31,12 +33,12 @@ body {
 
 .buttongreen{
     background-color: #008000; 
-    color: #808080;
+    color: #f1f1f1;
 }
 
 .buttonred{
     background-color: #780000;
-    color: #808080;
+    color: #f1f1f1;
 }
 
 .button {
