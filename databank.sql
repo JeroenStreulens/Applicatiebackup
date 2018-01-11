@@ -55,8 +55,9 @@ insert into AP_Rollen VALUES('student', 2);
 insert into AP_Rollen VALUES('docent', 3);
 insert into AP_Rollen VALUES('docent', 4);
 insert into AP_Rollen VALUES('student', 5);
-insert into AP_Voorkeur VALUES(1,2,'N');
+/*insert into AP_Voorkeur VALUES(1,2,'N');
 insert into AP_Voorkeur VALUES(1,0,'J');
 insert into AP_Voorkeur VALUES(1,5,'J');
 insert into AP_Voorkeur VALUES(5,0,'J');
+*/
 
