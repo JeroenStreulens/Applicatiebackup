@@ -31,45 +31,7 @@
 
             </c:forEach>
         </table>
-        <%--  <table>
-            <c:forEach var="groepstudent" items="${sessionScope.studentindezegroep}">
-                <form method="post" action='<c:out value="ctrl.do" />' >
-                    <tr>
-                        <td><input type="text" name="student" value="${groepstudent.getUnaam()}" readonly/></td>
-                        <td><button type="submit" value="Toevoegen">Verwijder</button></td>
-                        <input type="hidden" name="komvan" value="bewerktodelete" />
-                    </tr>
-                </form>
-            </c:forEach>
-        </table> --%>
-        <%--
-        <br><br>
         
-        <c:choose>
-            <c:when test="${!empty sessionScope.problemen}" >
-                <h3>Conflicten:</h3>
-                    <table>
-                        <c:forEach var="problemen" items="${sessionScope.problemen}">
-                            <form method="post" action='<c:out value="ctrl.do" />' >
-                                <tr>
-                                <td>${problemen}</td>
-                                </tr>
-                            </form>
-                        </c:forEach>
-           
-                    </table>
-          
-            </c:when>
-            <c:otherwise>
-                Er zijn geen conflicten!
-            </c:otherwise>
-        </c:choose>
-        <form method="post" action='<c:out value="ctrl.do" />' >
-            <button type="submit" value="Toevoegen">Ga naar overzicht</button>
-            
-            <input type="hidden" name="komvan" value="groeptooverzicht" />
-        </form>
-        --%>
         </div>
     </body>
 </html>
