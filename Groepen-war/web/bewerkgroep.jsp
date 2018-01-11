@@ -137,8 +137,3 @@
         </div>
     </body>
 </html>
-<<<<<<< HEAD
-
-=======
-<%@include file="/WEB-INF/jspf/footer.jspf" %>
->>>>>>> Wouter
