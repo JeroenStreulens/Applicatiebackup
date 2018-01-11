@@ -43,21 +43,38 @@ create table AP_Groepen(
 );
 
 
-insert into AP_Users VALUES(0,'Wouter Maurien', 'qwerty', 'n');
-insert into AP_Users VALUES(1,'Jeroen Streulens', 'azerty', 'n');
-insert into AP_Users VALUES(2, 'Mathias Wens', 'ikkomuitdekast', 'n');
-insert into AP_Users VALUES(5, 'Kristof De Ridder', 'cssguy', 'n');
-insert into AP_Users VALUES (3,'Den Herman','unix', 'n');
-insert into AP_Users VALUES (4,'Dessie','sponzenridder', 'n');
+insert into AP_Users VALUES(0,'Wouter Maurien', '0', 'n');
+insert into AP_Users VALUES(1,'Jeroen Streulens', '1', 'n');
+insert into AP_Users VALUES(2, 'Matthias Wens', '2', 'n');
+insert into AP_Users VALUES(3, 'Kristof De Ridder', '3', 'n');
+insert into AP_Users VALUES(4,'Jari Rooman', '4', 'n');
+insert into AP_Users VALUES(5,'Nick Todts', '5', 'n');
+insert into AP_Users VALUES(6, 'Kevin Todts', '6', 'n');
+insert into AP_Users VALUES(7, 'Wouter Raes', '7', 'n');
+insert into AP_Users VALUES(8,'Jente Heremans', '8', 'n');
+insert into AP_Users VALUES(9,'Toon Blommaerts', '9', 'n');
+insert into AP_Users VALUES(10, 'Pieterjan Peetermans', '10', 'n');
+insert into AP_Users VALUES(11, 'Jelle Meeus', '11', 'n');
+insert into AP_Users VALUES (20,'Herman Crauwels','20', 'n');
+insert into AP_Users VALUES (21,'Joost Vennekens','21', 'n');
+insert into AP_Users VALUES (22,'An Van Haperen','22', 'n');
+insert into AP_Users VALUES (23,'Ann Philips','23', 'n');
 insert into AP_Rollen VALUES('student', 0);
 insert into AP_Rollen VALUES('student', 1);
 insert into AP_Rollen VALUES('student', 2);
-insert into AP_Rollen VALUES('docent', 3);
-insert into AP_Rollen VALUES('docent', 4);
+insert into AP_Rollen VALUES('student', 3);
+insert into AP_Rollen VALUES('student', 4);
 insert into AP_Rollen VALUES('student', 5);
-/*insert into AP_Voorkeur VALUES(1,2,'N');
-insert into AP_Voorkeur VALUES(1,0,'J');
-insert into AP_Voorkeur VALUES(1,5,'J');
-insert into AP_Voorkeur VALUES(5,0,'J');
-*/
+insert into AP_Rollen VALUES('student', 6);
+insert into AP_Rollen VALUES('student', 7);
+insert into AP_Rollen VALUES('student', 8);
+insert into AP_Rollen VALUES('student', 9);
+insert into AP_Rollen VALUES('student', 10);
+insert into AP_Rollen VALUES('student', 11);
+insert into AP_Rollen VALUES('docent', 20);
+insert into AP_Rollen VALUES('docent', 21);
+insert into AP_Rollen VALUES('docent', 22);
+insert into AP_Rollen VALUES('docent', 23);
+
+
 
