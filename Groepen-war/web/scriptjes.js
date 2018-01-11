@@ -19,7 +19,6 @@ function myFunction() {
   }
 }
 
-
 function searchFunc(){
     var input, lijst, opties, filter, i, opt;
     input = document.getElementById('myInput');

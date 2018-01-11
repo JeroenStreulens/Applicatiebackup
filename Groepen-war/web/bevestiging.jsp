@@ -15,17 +15,21 @@
         <title>Bevestiging</title>
     </head>
     <body>
+        <div id="centraal">
+        <div class="center">
         <form action=<c:out value="ctrl.do" /> method="post">
-            Hieronder vindt u een overzicht van uw bevestigde voorkeuren. De docent zal deze gebruiken om de groepen op te bouwen.
-            <table>
+            <c:choose>
+            <c:when test="${!empty sessionScope.voorkeuren}" >
+            <h2>Hieronder vindt u een overzicht van uw bevestigde voorkeuren. De docent zal deze gebruiken om de groepen op te bouwen.</h2>
+            <table id="myTable2">
                 <tr><th>Naam student</th><th>Voorkeur</th></tr>
                 <c:forEach var="voor" items="${sessionScope.voorkeuren}">
                     <c:choose>
                         <c:when test="${voor.getVoorkeur() == 'J'}" >
-                            <tr bgcolor="lime">
+                            <tr bgcolor="#008000">
                         </c:when>
                         <c:when test="${voor.getVoorkeur() == 'N'}" >
-                            <tr bgcolor="red">
+                            <tr bgcolor="#780000 ">
                         </c:when>
                         <c:otherwise>
                             <tr>
@@ -36,7 +40,16 @@
                     </tr>
                 </c:forEach>
             </table>
+            </c:when>
+            <c:otherwise>
+                <h2>U heeft geen voorkeuren ingegeven<h3>
+                         
+            </c:otherwise>
+                            </c:choose>
         </form>
+        <%@include file="/WEB-INF/jspf/footer.jspf" %>
+        </div>
+        </div>
     </body>
 </html>
-<%@include file="/WEB-INF/jspf/footer.jspf" %>
+

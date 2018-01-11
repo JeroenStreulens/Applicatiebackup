@@ -17,17 +17,20 @@
     <body>
         <div class="center">
         <h1>Bewerk groep met groepnr <c:out value="${sessionScope.groepnr}" /></h1>
-        <h3>In deze groep zit momenteel:<h3>
-        <table id="myTable">
-            <tr class="header">
-                <c:if test="${!sessionScope.bevestigd}">
-                <th style="width:50%;">Naam</th>
-                <th style="width:50%;"></th>
-                </c:if>
-                <c:if test="${sessionScope.bevestigd}">
-                <th style="width:100%;">Naam</th>
-                </c:if>
-                
+        <c:choose>
+            <c:when test="${!empty sessionScope.studentindezegroep}" >
+                <h3>In deze groep zit momenteel:<h3>
+                    <table id="myTable3">
+                        <tr class="header">
+                            <c:if test="${!sessionScope.bevestigd}">
+                                <th style="width:50%;">Naam</th>
+                                <th style="width:50%;"></th>
+                            </c:if>
+                            <c:if test="${sessionScope.bevestigd}">
+                            <th style="width:100%;">Naam</th>
+                            </c:if>
+            
+     
             </tr>
             <c:forEach var="groepstudent" items="${sessionScope.studentindezegroep}">
             <form method="post" action='<c:out value="ctrl.do" />' >
@@ -35,13 +38,18 @@
                 <td>${groepstudent.getUnaam()}</td>
                         <c:if test="${!sessionScope.bevestigd}">
                             <input type="hidden" name="student" value="${groepstudent.getUnaam()}" readonly/>
-                            <td><button type="submit" value="Toevoegen">Verwijder</button></td>
+                            <td><button class="button buttonred" type="submit" value="Toevoegen">Verwijder</button></td>
                             <input type="hidden" name="komvan" value="bewerktodelete" />
                         </c:if>
             </tr>
              </form>
             </c:forEach>
         </table>
+                        </c:when>
+            <c:otherwise>
+                <h3>Er zitten nog geen studenten in deze groep!<h3>
+            </c:otherwise>
+        </c:choose>
         <%--  <table>
             <c:forEach var="groepstudent" items="${sessionScope.studentindezegroep}">
                 <form method="post" action='<c:out value="ctrl.do" />' >
@@ -68,7 +76,7 @@
             <form method="post" action='<c:out value="ctrl.do" />' >
             <tr>
                 <td>${stud.getUnaam()}</td>
-                <td><button type="submit" value="Toevoegen">Toevoegen</button>
+                <td><button class="button buttongreen" type="submit" value="Toevoegen">Toevoegen</button>
                 <input type="hidden" name="select" value="${stud.getUnaam()}" />
                 <input type="hidden" name="komvan" value="bewerktobewerk" /></td>
             </tr>
@@ -120,10 +128,12 @@
             </c:otherwise>
         </c:choose>
         <form method="post" action='<c:out value="ctrl.do" />' >
-            <button type="submit" value="Toevoegen">Ga naar overzicht</button>
-            
+            <button class="button buttongrey" type="submit" value="Toevoegen">Ga naar overzicht</button>
             <input type="hidden" name="komvan" value="bewerktodocent" />
         </form>
+            
+
+        <%@include file="/WEB-INF/jspf/footer.jspf" %> 
         </div>
     </body>
 </html>
