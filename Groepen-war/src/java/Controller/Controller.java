@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sessionBeans.GroepenLocal;
+import sessionBeans.GroepenRemote;
 
 /**
  *
@@ -31,7 +31,7 @@ import sessionBeans.GroepenLocal;
 public class Controller extends HttpServlet {
 
     @EJB
-    private GroepenLocal groepen;
+    private GroepenRemote groepen;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -154,7 +154,10 @@ public class Controller extends HttpServlet {
                       
                         return;
                     }
+<<<<<<< HEAD
                         
+=======
+>>>>>>> Wouter
                 case "bewerktobewerk":
                     {
                         String naam = request.getParameter("select");
